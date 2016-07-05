@@ -12,8 +12,10 @@ public class Attraction : MonoBehaviour {
     int loopCounter;
     public int skipValue;
     RaycastHit hitInfo;
-	// Use this for initialization
-	void Start () {
+    [SerializeField]
+    LayerMask agentsLayer;
+    // Use this for initialization
+    void Start () {
         loopCounter = Random.Range(0, skipValue);
         rb = GetComponent<Rigidbody>();
 	}
@@ -26,7 +28,7 @@ public class Attraction : MonoBehaviour {
             loopCounter = 0;
 
             lookRay = new Ray(transform.position, new Vector3(Random.insideUnitCircle.x, 0, Random.insideUnitCircle.y));
-            if (Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance)) // finding something
+            if (Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance, agentsLayer)) // finding something
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, hitInfo.transform.rotation, mimicRotationStrength * Time.fixedDeltaTime * skipValue);
 
