@@ -20,8 +20,9 @@ public class ForwardMovement : MonoBehaviour {
         loopCounter++;
         if (loopCounter >= skipValue)
         {
+            float panicStrength = GetComponent<PanicAgentController>().panicStrength;
             loopCounter = 0;
-            rb.AddForce(transform.forward * force * Mathf.PerlinNoise(Time.time, noiseOffset) * skipValue + Vector3.up * skipValue);
+            rb.AddForce(transform.forward * panicStrength * force * Mathf.PerlinNoise(Time.time, noiseOffset) * skipValue + Vector3.up * skipValue);
             //rb.AddForce(transform.forward * force * skipValue + Vector3.up * skipValue);
         }
     }
