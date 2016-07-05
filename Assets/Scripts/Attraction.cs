@@ -2,14 +2,44 @@
 using System.Collections;
 
 public class Attraction : MonoBehaviour {
-
+    Rigidbody rb;
+    Ray lookRay;
+    public float    findNeighbourDistance, 
+                    mimicRotationStrength,
+                    mimicMaxDistance,
+                    mimicMinDistance,
+                    mimicDistanceStrength;
+    int loopCounter;
+    public int skipValue;
+    RaycastHit hitInfo;
 	// Use this for initialization
 	void Start () {
-	
+        loopCounter = Random.Range(0, skipValue);
+        rb = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void FixedUpdate () {
+        loopCounter++;
+        if (loopCounter >= skipValue)
+        {
+            loopCounter = 0;
+
+            lookRay = new Ray(transform.position, new Vector3(Random.insideUnitCircle.x, 0, Random.insideUnitCircle.y));
+            if (Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance)) // finding something
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, hitInfo.transform.rotation, mimicRotationStrength * Time.fixedDeltaTime * skipValue);
+
+                float distance = (transform.position - hitInfo.transform.position).magnitude;
+                if (distance > mimicMaxDistance) // if the neighbour is far away
+                {
+                    rb.AddForce(lookRay.direction * mimicDistanceStrength * skipValue);
+                }
+                else if (distance < mimicMinDistance) // if the neighbour is too close
+                {
+                    rb.AddForce(-lookRay.direction * mimicDistanceStrength * skipValue);
+                }
+            }
+        }
 	}
 }
