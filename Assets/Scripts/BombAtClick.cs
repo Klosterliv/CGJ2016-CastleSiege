@@ -38,6 +38,8 @@ public class BombAtClick : MonoBehaviour {
                     g.layer = 10;
                     p.panicStrength += 10.0f;
 
+					EffectsManager.instance.SpawnBlood(g.transform);
+
                     i++;
                 }
                 //Instantiate(theInstance, hitInfo.point, Quaternion.identity);
