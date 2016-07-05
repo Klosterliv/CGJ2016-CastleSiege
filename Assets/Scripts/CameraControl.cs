@@ -35,9 +35,17 @@ public class CameraControl : MonoBehaviour {
 		move *= camSpeed;
 
 		targetPos = transform.position+move;
-		transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime*camLerpSpeed);
-		//transform.Translate(move);
 
-		Physics.Raycast(transform.position, -Vector3.up, minHeight, terrainMask);
+		//transform.Translate(move);
+		RaycastHit hit;
+		Ray ray = new Ray(transform.position, -Vector3.up);
+		//Debug.DrawRay(ray);
+		if (Physics.Raycast(ray, out hit, 2000, terrainMask)) {
+			Debug.Log(hit.distance);
+			//if (hit.distance <= minHeight)
+			targetPos.y = hit.point.y + minHeight;
+		}
+
+		transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime*camLerpSpeed);
 	}
 }
