@@ -10,6 +10,7 @@ public class State : MonoBehaviour
     private SpringJoint springJoint;
     private Attraction attraction;
 
+    public bool alive;
     public bool panicing = false;
 
     // Use this for initialization

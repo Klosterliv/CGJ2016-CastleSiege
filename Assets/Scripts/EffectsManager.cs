@@ -9,7 +9,9 @@ public class EffectsManager : MonoBehaviour {
 	GameObject bloodEffect;
 	[SerializeField]
 	GameObject bloodSplat;
-	[SerializeField]
+    [SerializeField]
+    GameObject explosionEffect;
+    [SerializeField]
 	LayerMask nonAgentLayer;
 
 	void Awake()
@@ -46,4 +48,8 @@ public class EffectsManager : MonoBehaviour {
 			newBlood = (GameObject) Instantiate(bloodSplat, hit.point, parent.rotation);
 		}
 	}
+
+    public void SpawnExplosion(Vector3 explosionCenter) {
+        Instantiate(explosionEffect, explosionCenter, Quaternion.identity);
+    }
 }
