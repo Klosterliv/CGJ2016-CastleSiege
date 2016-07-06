@@ -39,6 +39,7 @@ public class BombAtClick : MonoBehaviour {
                     p.panicStrength += 10.0f;
 
 					EffectsManager.instance.SpawnBlood(g.transform);
+					EffectsManager.instance.SpawnBloodSplat(g.transform);
 
                     i++;
                 }
