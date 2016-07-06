@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BombAtClick : MonoBehaviour {
+public class BombAtClickBackup : MonoBehaviour {
     public GameObject theInstance;
     public float    explosionRadius,
                     explosionForce;
