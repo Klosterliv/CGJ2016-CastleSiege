@@ -14,6 +14,12 @@ public class Attraction : MonoBehaviour {
     RaycastHit hitInfo;
     [SerializeField]
     LayerMask agentsLayer, deadLayer;
+
+    float distance;
+    PanicAgentController pac;
+    PanicAgentController hitPac;
+    Quaternion newQuat;
+
     // Use this for initialization
     void Start () {
         loopCounter = Random.Range(0, skipValue);
@@ -26,13 +32,13 @@ public class Attraction : MonoBehaviour {
         if (loopCounter >= skipValue)
         {
             loopCounter = 0;
-            PanicAgentController pac = GetComponent<PanicAgentController>();
+            pac = GetComponent<PanicAgentController>();
             lookRay = new Ray(transform.position, new Vector3(Random.insideUnitCircle.x, 0, Random.insideUnitCircle.y));
             if (Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance, agentsLayer)) // finding something
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, hitInfo.transform.rotation, mimicRotationStrength * Time.fixedDeltaTime * skipValue);
 
-                float distance = (transform.position - hitInfo.transform.position).magnitude;
+                distance = (transform.position - hitInfo.transform.position).magnitude;
                 if (distance > mimicMaxDistance) // if the neighbour is far away
                 {
                     rb.AddForce(lookRay.direction * mimicDistanceStrength * skipValue);
@@ -42,12 +48,12 @@ public class Attraction : MonoBehaviour {
                     rb.AddForce(-lookRay.direction * mimicDistanceStrength * skipValue);
                 }
 
-                PanicAgentController hitPac = hitInfo.transform.GetComponent<PanicAgentController>();
+                hitPac = hitInfo.transform.GetComponent<PanicAgentController>();
                 pac.panicStrength = Mathf.Lerp(pac.panicStrength, hitPac.panicStrength, 0.7f);
 
             } else if(Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance, deadLayer, QueryTriggerInteraction.Collide)) // finding dead people
             {
-                Quaternion newQuat = Quaternion.LookRotation(transform.position - hitInfo.transform.position);
+                newQuat = Quaternion.LookRotation(transform.position - hitInfo.transform.position);
                 transform.rotation = newQuat;
                 pac.panicStrength += 1.8f;
             }
