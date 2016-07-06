@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ReplaceAtImpact : MonoBehaviour {
+public class ReplaceAtImpact : MonoBehaviour
+{
     public Transform explosionPrefab;
     void OnCollisionEnter(Collision collision)
     {
+        print("End:" + Time.time);
+
         ContactPoint contact = collision.contacts[0];
 
         // Rotate the object so that the y-axis faces along the normal of the surface

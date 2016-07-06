@@ -4,6 +4,9 @@ using System;
 
 public class Fire : MonoBehaviour
 {
+    public const float g = 45f;
+    public const float sinOf45 = 0.85090352453f;
+    public const float cosOf45 = 0.52532198881f;
 
     public GameObject projectilePrefab;
     RaycastHit hitInfo;
@@ -35,6 +38,7 @@ public class Fire : MonoBehaviour
 
     private void FireProjectile(Vector3 target)
     {
+        print("Start:" + Time.time);
 
         var distance = Vector3.Distance(target, transform.position);
         var aim = (new Vector3(target.x, 0, target.z) - transform.position).normalized;
@@ -44,16 +48,11 @@ public class Fire : MonoBehaviour
         proj.GetComponent<Rigidbody>().AddForce(-transform.up * calculateForce(distance), ForceMode.Impulse);
     }
 
-    
-
-    private float calculateForce(float distance)
+    public static float calculateForce(float distance)
     {
-        var g = 45f;
-        var sinOf45 = 0.85090352453f;
-        var cosOf45 = 0.52532198881f;
-
         var v = distance * g / 2 * sinOf45 * cosOf45;
 
         return Mathf.Sqrt(v);
     }
+
 }
