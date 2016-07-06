@@ -5,9 +5,16 @@ public class Trajectory : MonoBehaviour
 {
 
     LineRenderer line;
+
+    private Vector3 distanceAwayFromZeroOnYVector;
+    private float distanceAwayFromZeroOnY;
+
     // Use this for initialization
     void Start()
     {
+        distanceAwayFromZeroOnYVector = new Vector3(0, transform.position.y, 0) - Vector3.zero;
+        print(distanceAwayFromZeroOnYVector.y);
+        distanceAwayFromZeroOnY = distanceAwayFromZeroOnYVector.y;
         line = this.gameObject.GetComponent<LineRenderer>();
     }
 
@@ -17,13 +24,13 @@ public class Trajectory : MonoBehaviour
 
     }
 
-
     public void DrawTrajectory(Vector3 target)
     {
         line.enabled = true;
 
         //var g = 12.15f;\
-        var g = 13.5f;
+        var g = 16f;
+        // var g = 12f;
         var vertexCount = 20;
 
         line.SetVertexCount(vertexCount);
@@ -45,13 +52,18 @@ public class Trajectory : MonoBehaviour
 
         for (var i = 0; i < vertexCount; i++)
         {
-            currentPosition += straightLineStep;
-            currentTime += timeStep;
+            if (i > 0)
+            {
+                currentPosition += straightLineStep;
+                currentTime += timeStep;
+            }
 
             var x = currentPosition.x;
             var z = currentPosition.z;
 
             float y = v_i * Fire.sinOf45 * currentTime - 0.5f * g * currentTime * currentTime;
+
+            y += distanceAwayFromZeroOnY;
 
             var point = new Vector3(x, y, z);
             line.SetPosition(i, point);
