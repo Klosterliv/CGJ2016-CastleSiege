@@ -36,7 +36,7 @@ public class BombAtClick : MonoBehaviour {
 
                 hitColliders = Physics.OverlapSphere(hitInfo.point, explosionRadius, (agentsLayer+deadLayer));
 
-                Time.timeScale *= 1.0f / hitColliders.Length;
+                Time.timeScale *= 1.0f / (hitColliders.Length+1);
 
                 i = 0;
                 while (i < hitColliders.Length)
