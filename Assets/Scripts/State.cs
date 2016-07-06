@@ -36,7 +36,7 @@ public class State : MonoBehaviour
     public void Panic()
     {
 
-        print("panic!");
+        //print("panic!");
         forwardMovement.marching = false;
         //springJoint.connectedBody = null;
         springJoint.spring = 0.0f;
