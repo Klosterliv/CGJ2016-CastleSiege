@@ -24,10 +24,10 @@ public class State : MonoBehaviour
     void Update()
     {
 
-        if (Time.unscaledTime > 3 && !panicing)
-        {
-            Panic();
-        }
+        //if (Time.unscaledTime > 3 && !panicing)
+        //{
+        //    Panic();
+        //}
 
     }
 
