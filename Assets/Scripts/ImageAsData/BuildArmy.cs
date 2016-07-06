@@ -11,9 +11,7 @@ public class BuildArmy : MonoBehaviour
         public Color32 color;
         public GameObject prefab;
     }
-
-    public float armyReferencePointX = 260;
-    public float armyReferencePointZ = 60;
+    
     public float formationSpacing = 3;
 
     private Vector3 armyBasePoint;
@@ -47,7 +45,8 @@ public class BuildArmy : MonoBehaviour
     {
         white = new Color32(255, 255, 255, 255);
         army = GameObject.Find("Army");
-        armyBasePoint = new Vector3(armyReferencePointX, 1.5f, armyReferencePointZ);
+        //armyBasePoint = new Vector3(armyReferencePointX, 1.5f, armyReferencePointZ);
+        armyBasePoint = transform.position;
         m_imageData = new ImageAsData<Vector3>(m_levelData, new PixelCoordinateConverterFlatGrid(m_cellSize));
     }
 

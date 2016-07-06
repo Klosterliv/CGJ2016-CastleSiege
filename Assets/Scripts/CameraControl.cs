@@ -4,6 +4,8 @@ using System.Collections;
 public class CameraControl : MonoBehaviour {
 
 	[SerializeField]
+	float zoomSpeed = 1;
+	[SerializeField]
 	float camSpeed = 1;
 	[SerializeField]
 	float maxHeight = 2;
@@ -41,7 +43,7 @@ public class CameraControl : MonoBehaviour {
 		Ray ray = new Ray(transform.position, -Vector3.up);
 		//Debug.DrawRay(ray);
 		if (Physics.Raycast(ray, out hit, 2000, terrainMask)) {
-			Debug.Log(hit.distance);
+			//Debug.Log(hit.distance);
 			//if (hit.distance <= minHeight)
 			targetPos.y = hit.point.y + minHeight;
 		}

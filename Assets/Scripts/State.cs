@@ -10,7 +10,8 @@ public class State : MonoBehaviour
     private SpringJoint springJoint;
     private Attraction attraction;
 
-    public bool panicing = false;
+    public bool alive;
+    public bool panicking = false;
 
     // Use this for initialization
     void Start()
@@ -18,13 +19,15 @@ public class State : MonoBehaviour
         forwardMovement = GetComponent<ForwardMovement>();
         springJoint = GetComponent<SpringJoint>();
         attraction = GetComponent<Attraction>();
+
+        Panic();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        //if (Time.unscaledTime > 3 && !panicing)
+        //if (Time.unscaledTime > 3 && !panicking)
         //{
         //    Panic();
         //}
@@ -34,10 +37,11 @@ public class State : MonoBehaviour
     public void Panic()
     {
 
-        print("panic!");
+        //print("panic!");
         forwardMovement.marching = false;
-        springJoint.connectedBody = null;
-        panicing = true;
+        //springJoint.connectedBody = null;
+        springJoint.spring = 0.0f;
+        panicking = true;
         attraction.enabled = true;
         
     }
