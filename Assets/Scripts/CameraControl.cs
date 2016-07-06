@@ -4,6 +4,8 @@ using System.Collections;
 public class CameraControl : MonoBehaviour {
 
 	[SerializeField]
+	float zoomSpeed = 1;
+	[SerializeField]
 	float camSpeed = 1;
 	[SerializeField]
 	float maxHeight = 2;

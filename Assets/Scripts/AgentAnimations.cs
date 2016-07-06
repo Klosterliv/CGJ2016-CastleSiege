@@ -10,6 +10,8 @@ public class AgentAnimations : MonoBehaviour {
 	float hopTimeOffset = 0;
 	[SerializeField] 
 	float hopSpeed;
+	[SerializeField] 
+	State state;
 
 	Rigidbody rbody;
 	float velocity;
@@ -22,6 +24,7 @@ public class AgentAnimations : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		if (state.alive)
 		Hopping ();
 	
 	}
@@ -30,9 +33,9 @@ public class AgentAnimations : MonoBehaviour {
 
 		hopTimeOffset += Time.deltaTime
 			*hopSpeed
-			*(panicAgentController.panicStrength*0.3f+1)
-			*velocity;
-		
+			//*(panicAgentController.panicStrength*0.3f+1)
+			//*(velocity+1);
+			*Mathf.Max(velocity, panicAgentController.panicStrength*3f);		
 
 		//Vector3.up * hopAnimation.Evaluate(hopTimeOffset)
 
