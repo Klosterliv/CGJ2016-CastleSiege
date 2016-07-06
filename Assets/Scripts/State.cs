@@ -11,7 +11,7 @@ public class State : MonoBehaviour
     private Attraction attraction;
 
     public bool alive;
-    public bool panicing = false;
+    public bool panicking = false;
 
     // Use this for initialization
     void Start()
@@ -27,7 +27,7 @@ public class State : MonoBehaviour
     void Update()
     {
 
-        //if (Time.unscaledTime > 3 && !panicing)
+        //if (Time.unscaledTime > 3 && !panicking)
         //{
         //    Panic();
         //}
@@ -41,7 +41,7 @@ public class State : MonoBehaviour
         forwardMovement.marching = false;
         //springJoint.connectedBody = null;
         springJoint.spring = 0.0f;
-        panicing = true;
+        panicking = true;
         attraction.enabled = true;
         
     }

@@ -11,9 +11,7 @@ public class BuildArmy : MonoBehaviour
         public Color32 color;
         public GameObject prefab;
     }
-
-    public float armyReferencePointX = 260;
-    public float armyReferencePointZ = 60;
+    
     public float formationSpacing = 3;
 
     private Vector3 armyBasePoint;
