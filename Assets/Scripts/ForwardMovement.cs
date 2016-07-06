@@ -5,12 +5,18 @@ public class ForwardMovement : MonoBehaviour
 {
     public bool marching = true;
 
+    int loopCounter;
+    public int skipValue;
+
     Rigidbody rb;
     public float force;
+    float noiseOffset;
     // Use this for initialization
 
     void Start()
     {
+        loopCounter = Random.Range(0, skipValue);
+        noiseOffset = Random.Range(0.0f, 1000.0f);
         rb = GetComponent<Rigidbody>();
     }
 
@@ -30,7 +36,15 @@ public class ForwardMovement : MonoBehaviour
 
     void RunInPanic()
     {
-        rb.AddForce(transform.forward * force * 4 * Mathf.PerlinNoise(Time.time, 0.0f));
+        loopCounter++;
+        if (loopCounter >= skipValue)
+        {
+            loopCounter = 0;
+            float panicStrength = GetComponent<PanicAgentController>().panicStrength;
+            //rb.AddForce(transform.forward * panicStrength * force * Mathf.PerlinNoise(Time.time, noiseOffset) * skipValue + Vector3.up * skipValue);
+            rb.AddForce(transform.forward * Mathf.Max(panicStrength,0.9f) * force * skipValue + Vector3.up * skipValue);
+            //rb.AddForce(transform.forward * force * 4 * Mathf.PerlinNoise(Time.time, 0.0f));
+        }
     }
 
     //public float    force,

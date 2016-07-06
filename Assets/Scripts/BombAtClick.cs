@@ -20,13 +20,27 @@ public class BombAtClick : MonoBehaviour {
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hitInfo, landscapeLayer)) {
-                Collider[] hitColliders = Physics.OverlapSphere(hitInfo.point, explosionRadius, (agentsLayer+deadLayer));
+
+                Collider[] hitColliders = Physics.OverlapSphere(hitInfo.point, explosionRadius*4.2f, (agentsLayer));
                 int i = 0;
                 while (i < hitColliders.Length)
                 {
+                    Quaternion newQuat = Quaternion.LookRotation(hitColliders[i].transform.position - hitInfo.point);
+                    hitColliders[i].transform.rotation = newQuat;
+                    
+
+                    PanicAgentController p = hitColliders[i].GetComponent<PanicAgentController>();
+                    p.panicStrength += 3.0f;
+                    i++;
+                }
+
+                hitColliders = Physics.OverlapSphere(hitInfo.point, explosionRadius, (agentsLayer+deadLayer));
+                i = 0;
+                while (i < hitColliders.Length)
+                {
+
                     Rigidbody rb = hitColliders[i].GetComponent<Rigidbody>();
                     Attraction a = hitColliders[i].GetComponent<Attraction>();
-                    PanicAgentController p = hitColliders[i].GetComponent<PanicAgentController>();
                     GameObject g = hitColliders[i].gameObject;
 
                     ForwardMovement f = hitColliders[i].GetComponent<ForwardMovement>();
@@ -36,7 +50,6 @@ public class BombAtClick : MonoBehaviour {
                     a.enabled = false;
                     f.enabled = false;
                     g.layer = 10;
-                    p.panicStrength += 10.0f;
 
                     i++;
                 }
