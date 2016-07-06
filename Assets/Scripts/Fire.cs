@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Fire : MonoBehaviour
 {
 
     public GameObject projectilePrefab;
+    RaycastHit hitInfo;
+    [SerializeField]
+    LayerMask landscapeLayer, agentsLayer, deadLayer;
 
 
     private GameObject crosshair;
@@ -40,68 +44,7 @@ public class Fire : MonoBehaviour
         proj.GetComponent<Rigidbody>().AddForce(-transform.up * calculateForce(distance), ForceMode.Impulse);
     }
 
-    private void AngleGun(float angle)
-    {
-        if (angle > 90)
-        {
-            throw new Exception("Angle can not be 90");
-=======
-            if (Physics.Raycast(ray, out hitInfo, landscapeLayer))
-            {
-
-                Collider[] hitColliders = Physics.OverlapSphere(hitInfo.point, explosionRadius * 4.2f, (agentsLayer));
-                int i = 0;
-                while (i < hitColliders.Length)
-                {
-                    Quaternion newQuat = Quaternion.LookRotation(hitColliders[i].transform.position - hitInfo.point);
-                    hitColliders[i].transform.rotation = newQuat;
-
-
-                    PanicAgentController p = hitColliders[i].GetComponent<PanicAgentController>();
-                    p.panicStrength += 3.0f;
-                    i++;
-                }
-
-                hitColliders = Physics.OverlapSphere(hitInfo.point, explosionRadius, (agentsLayer + deadLayer));
-
-                Time.timeScale *= 1.0f / hitColliders.Length;
-
-                i = 0;
-                while (i < hitColliders.Length)
-                {
-
-                    Rigidbody rb = hitColliders[i].GetComponent<Rigidbody>();
-                    Attraction a = hitColliders[i].GetComponent<Attraction>();
-                    State s = hitColliders[i].GetComponent<State>();
-                    GameObject g = hitColliders[i].gameObject;
-
-                    s.alive = false; // you are now dead
-
-                    ForwardMovement f = hitColliders[i].GetComponent<ForwardMovement>();
-                    rb.constraints = RigidbodyConstraints.None;
-                    rb.AddExplosionForce(explosionForce, hitInfo.point + Vector3.down * 0.2f * explosionRadius, explosionRadius * 2.5f);
-                    //rb.AddTorque(Random.insideUnitSphere.normalized * 1000000.0f );
-                    //rb.AddTorque(Vector3.left*100.0f);
-
-
-                    a.enabled = false;
-                    f.enabled = false;
-                    g.layer = 10;
-
-                    EffectsManager.instance.SpawnBlood(g.transform); // trails + splatter from trail
-                    EffectsManager.instance.SpawnBloodSplat(g.transform); // groundsplatter
-
-
-                    i++;
-                }
-                EffectsManager.instance.SpawnExplosion(hitInfo.point);
-                //Instantiate(theInstance, hitInfo.point, Quaternion.identity);
-            }
->>>>>>> 20007241b2f5c97a9a4ee844496beaf81cea9386
-        }
-
-        transform.localRotation = Quaternion.Euler(angle + 90, 180, 0);
-    }
+    
 
     private float calculateForce(float distance)
     {
