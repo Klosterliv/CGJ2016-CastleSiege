@@ -53,7 +53,6 @@ public class BombAtClick : MonoBehaviour {
                     rb.constraints = RigidbodyConstraints.None;
                     rb.AddExplosionForce(explosionForce, hitInfo.point + Vector3.down*0.2f* explosionRadius, explosionRadius*2.5f);
                     //rb.AddTorque(Random.insideUnitSphere.normalized * 1000000.0f );
-                    //rb.AddTorque(Vector3.left*100.0f);
 
 
                     a.enabled = false;
@@ -67,7 +66,6 @@ public class BombAtClick : MonoBehaviour {
                     i++;
                 }
                 EffectsManager.instance.SpawnExplosion(hitInfo.point);
-                //Instantiate(theInstance, hitInfo.point, Quaternion.identity);
             }
         }
     }
