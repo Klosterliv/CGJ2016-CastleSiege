@@ -58,13 +58,13 @@ public class Attraction : MonoBehaviour {
                 }
 
                 hitPac = hitInfo.transform.GetComponent<PanicAgentController>();
-                pac.panicStrength = Mathf.Lerp(pac.panicStrength, hitPac.panicStrength, 0.7f);
+                pac.panicStrength = Mathf.Lerp(pac.panicStrength, hitPac.panicStrength*1.2f, 0.7f);
 
             } else if(Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance, deadLayer, QueryTriggerInteraction.Collide)) // finding dead people
             {
                 newQuat = Quaternion.LookRotation(transform.position - hitInfo.transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, newQuat, 0.3f);
-                pac.panicStrength += 0.6f;
+                pac.panicStrength += 1.0f;
             }
         }
 	}
