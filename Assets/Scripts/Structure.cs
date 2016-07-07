@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AttackBehaviour : MonoBehaviour {
-
+public class Structure : MonoBehaviour {
+    public float life;
 	// Use this for initialization
 	void Start () {
 	
@@ -10,6 +10,9 @@ public class AttackBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-	    
+        if (life <= 0.0f)
+        {
+            Destroy(gameObject);
+        }
 	}
 }

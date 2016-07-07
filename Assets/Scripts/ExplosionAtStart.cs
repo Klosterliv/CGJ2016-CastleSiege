@@ -6,6 +6,8 @@ public class ExplosionAtStart : MonoBehaviour {
     public bool shouldKill;
     [SerializeField]
     LayerMask agentsLayer, deadLayer;
+
+    private Vector3 flatten = new Vector3(1.0f,0.0f,1.0f);
     // Use this for initialization
 
 
@@ -22,17 +24,11 @@ public class ExplosionAtStart : MonoBehaviour {
         while (i < hitColliders.Length)
         {
             float panicVal = (explosionRadius - Vector3.Distance(hitColliders[i].transform.position, transform.position)) / explosionRadius;
-            //float panicVal = ((explosionForce * 4.2f) - (hitColliders[i].transform.position - transform.position).magnitude);
+            
             hitColliders[i].GetComponent<State>().Panic(panicVal);
-
-            //hitColliders[i].transform.rotation = Quaternion.Lerp(hitColliders[i].transform.rotation, Quaternion.LookRotation(hitColliders[i].transform.position - transform.position), panicVal+5);
-            hitColliders[i].transform.rotation = Quaternion.LookRotation(hitColliders[i].transform.position - transform.position);
-            //hitColliders[i].transform.rotation = Quaternion.Euler(0, -90.0f, 0);
-            //Debug.DrawLine(hitColliders[i].transform.position, (transform.position - hitColliders[i].transform.position));
+            
+            hitColliders[i].transform.rotation = Quaternion.LookRotation(Vector3.Scale(hitColliders[i].transform.position, flatten) - Vector3.Scale(transform.position ,flatten));
             Debug.DrawLine(transform.position, hitColliders[i].transform.position);
-
-            //Debug.Log(panicVal);
-            //hitColliders[i].GetComponent<State>().Panic(1.0f + addPanic);
 
             i++;
         }

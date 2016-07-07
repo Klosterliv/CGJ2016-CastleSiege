@@ -7,7 +7,7 @@ public class AttackMe : MonoBehaviour {
     {
         if (other.tag == "Agent")
         {
-            other.GetComponent<State>().attack();
+            other.GetComponent<State>().attack(transform.parent.GetComponent<Structure>());
         }
     }
 }

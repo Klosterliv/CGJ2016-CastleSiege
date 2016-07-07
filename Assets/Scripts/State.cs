@@ -12,6 +12,7 @@ public class State : MonoBehaviour
     private TurnTowardsCastle turnTowardsCastle;
     private MarchingBehvaiour marchingBehaviour;
     private PanicAgentController pac;
+    private aiAttack aiAttack;
 
     public bool alive;
     public enum aiState { marching, panicking, dead, attacking };
@@ -26,6 +27,7 @@ public class State : MonoBehaviour
         marchingBehaviour = GetComponent<MarchingBehvaiour>();
         turnTowardsCastle = GetComponent<TurnTowardsCastle>();
         pac = GetComponent<PanicAgentController>();
+        aiAttack = GetComponent<aiAttack>();
     }
 
     public void marching()
@@ -47,6 +49,7 @@ public class State : MonoBehaviour
         attraction.enabled = false;
         forwardMovement.enabled = false;
         turnTowardsCastle.enabled = false;
+        aiAttack.enabled = false;
 
         gameObject.layer = 10;
 
@@ -64,10 +67,11 @@ public class State : MonoBehaviour
             attraction.enabled = true;
             marchingBehaviour.enabled = false;
             pac.panicStrength += addPanicAmount;
+            aiAttack.enabled = false;
         }
     }
     
-    public void attack()
+    public void attack( Structure attackMe )
     {
         if (alive)
         {
@@ -76,6 +80,8 @@ public class State : MonoBehaviour
             forwardMovement.enabled = false;
             attraction.enabled = false;
             marchingBehaviour.enabled = false;
+            aiAttack.enabled = true;
+            aiAttack.attackedStructure = attackMe;
         }
     }
 }
