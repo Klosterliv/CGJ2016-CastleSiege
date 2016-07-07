@@ -13,7 +13,7 @@ public class Attraction : MonoBehaviour {
     public int skipValue;
     RaycastHit hitInfo;
     [SerializeField]
-    LayerMask agentsLayer, deadLayer;
+    LayerMask agentsLayer, deadLayer, attackObjects;
 
     float distance;
     PanicAgentController pac;
@@ -36,7 +36,16 @@ public class Attraction : MonoBehaviour {
             lookRay = new Ray(transform.position, new Vector3(Random.insideUnitCircle.x, 0, Random.insideUnitCircle.y));
             if (Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance, agentsLayer)) // finding something
             {
-                transform.rotation = Quaternion.Lerp(transform.rotation, hitInfo.transform.rotation, mimicRotationStrength * Time.fixedDeltaTime * skipValue);
+                if(hitInfo.transform.GetComponent<State>().currentState == State.aiState.attacking)
+                {
+                    //transform.rotation = Quaternion.LookRotation(-transform.right);
+                    Debug.Log("this is happening!");
+                    pac.panicStrength += 1.2f;
+                } else
+                {
+                    transform.rotation = Quaternion.Lerp(transform.rotation, hitInfo.transform.rotation, mimicRotationStrength * Time.fixedDeltaTime * skipValue);
+                }
+                
 
                 distance = (transform.position - hitInfo.transform.position).magnitude;
                 if (distance > mimicMaxDistance) // if the neighbour is far away

@@ -59,23 +59,23 @@ public class State : MonoBehaviour
         if (alive)
         {
             currentState = aiState.panicking;
+            forwardMovement.enabled = true;
             forwardMovement.marching = false;
             attraction.enabled = true;
             marchingBehaviour.enabled = false;
             pac.panicStrength += addPanicAmount;
         }
     }
-    /*
+    
     public void attack()
     {
         if (alive)
         {
-            currentState = aiState.panicking;
-            forwardMovement.marching = false;
-            attraction.enabled = true;
+            turnTowardsCastle.enabled = false;
+            currentState = aiState.attacking;
+            forwardMovement.enabled = false;
+            attraction.enabled = false;
             marchingBehaviour.enabled = false;
-            pac.panicStrength += addPanicAmount;
         }
     }
-    */
 }
