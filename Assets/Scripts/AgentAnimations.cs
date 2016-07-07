@@ -38,16 +38,19 @@ public class AgentAnimations : MonoBehaviour {
 			*Mathf.Max(velocity, panicAgentController.panicStrength*3f);		
 
 		//Vector3.up * hopAnimation.Evaluate(hopTimeOffset)
-
+        
 		Vector3 newPos = new Vector3(transform.parent.position.x, transform.parent.position.y + 
 			hopAnimation.Evaluate(hopTimeOffset)*(panicAgentController.panicStrength*0.1f+1), 
 			transform.parent.position.z);
+        
+        transform.position = newPos;
 
-		transform.position = newPos;
+        //transform.position = (hopAnimation.Evaluate(hopTimeOffset) * (panicAgentController.panicStrength * 0.1f + 1)) * Vector3.up + transform.position;
 
 
 
-	}
+
+    }
 
 	void FixedUpdate () {
 		velocity = rbody.velocity.magnitude;

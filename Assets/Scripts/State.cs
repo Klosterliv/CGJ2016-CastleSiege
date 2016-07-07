@@ -9,7 +9,9 @@ public class State : MonoBehaviour
     private ForwardMovement forwardMovement;
     //private SpringJoint springJoint;
     private Attraction attraction;
+    private TurnTowardsCastle turnTowardsCastle;
     private MarchingBehvaiour marchingBehaviour;
+    private PanicAgentController pac;
 
     public bool alive;
     public enum aiState { marching, panicking, dead, attacking };
@@ -22,6 +24,8 @@ public class State : MonoBehaviour
         forwardMovement = GetComponent<ForwardMovement>();
         attraction = GetComponent<Attraction>();
         marchingBehaviour = GetComponent<MarchingBehvaiour>();
+        turnTowardsCastle = GetComponent<TurnTowardsCastle>();
+        pac = GetComponent<PanicAgentController>();
     }
 
     public void marching()
@@ -40,17 +44,17 @@ public class State : MonoBehaviour
         currentState = aiState.dead;
         alive = false;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        attraction.enabled = false;
+        forwardMovement.enabled = false;
+        turnTowardsCastle.enabled = false;
 
-        GetComponent<Attraction>().enabled = false;
-
-        GetComponent<ForwardMovement>().enabled = false;
         gameObject.layer = 10;
 
         EffectsManager.instance.SpawnBlood(transform);
         EffectsManager.instance.SpawnBloodSplat(transform);
     }
 
-    public void Panic()
+    public void Panic(float addPanicAmount)
     {
         if (alive)
         {
@@ -58,6 +62,20 @@ public class State : MonoBehaviour
             forwardMovement.marching = false;
             attraction.enabled = true;
             marchingBehaviour.enabled = false;
+            pac.panicStrength += addPanicAmount;
         }
     }
+    /*
+    public void attack()
+    {
+        if (alive)
+        {
+            currentState = aiState.panicking;
+            forwardMovement.marching = false;
+            attraction.enabled = true;
+            marchingBehaviour.enabled = false;
+            pac.panicStrength += addPanicAmount;
+        }
+    }
+    */
 }

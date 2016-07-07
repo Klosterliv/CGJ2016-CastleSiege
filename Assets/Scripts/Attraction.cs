@@ -54,8 +54,8 @@ public class Attraction : MonoBehaviour {
             } else if(Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance, deadLayer, QueryTriggerInteraction.Collide)) // finding dead people
             {
                 newQuat = Quaternion.LookRotation(transform.position - hitInfo.transform.position);
-                transform.rotation = newQuat;
-                pac.panicStrength += 1.8f;
+                transform.rotation = Quaternion.Lerp(transform.rotation, newQuat, 0.3f);
+                pac.panicStrength += 0.6f;
             }
         }
 	}

@@ -5,10 +5,12 @@ public class MarchingBehvaiour : MonoBehaviour {
     public Transform left, right, forward, backward;
     public float marchingDistance, strengthAttract, strengthAvoid;
     public float yRotation;
-    Rigidbody rb;
+    private Rigidbody rb;
+    private PanicAgentController pac;
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
+        pac = GetComponent<PanicAgentController>();
 	}
 	
 	// Update is called once per frame
@@ -42,7 +44,13 @@ public class MarchingBehvaiour : MonoBehaviour {
         yRotation = Mathf.Lerp(yRotation, direction.GetComponent<MarchingBehvaiour>().yRotation, 0.4f);
         if ((transform.position - direction.position).magnitude > marchingDistance * 2.8f)
         {
-            GetComponent<State>().Panic();
+            GetComponent<State>().Panic(0.0f);
+            enabled = false;
+        }
+
+        if(pac.panicStrength>1.0f)
+        {
+            GetComponent<State>().Panic(0.0f);
             enabled = false;
         }
 
