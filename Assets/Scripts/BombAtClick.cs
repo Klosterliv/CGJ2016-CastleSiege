@@ -36,7 +36,7 @@ public class BombAtClick : MonoBehaviour {
 
                 hitColliders = Physics.OverlapSphere(hitInfo.point, explosionRadius, (agentsLayer+deadLayer));
 
-                Time.timeScale *= 1.0f / hitColliders.Length;
+                Time.timeScale *= 1.0f / (hitColliders.Length+1);
 
                 i = 0;
                 while (i < hitColliders.Length)
@@ -53,7 +53,6 @@ public class BombAtClick : MonoBehaviour {
                     rb.constraints = RigidbodyConstraints.None;
                     rb.AddExplosionForce(explosionForce, hitInfo.point + Vector3.down*0.2f* explosionRadius, explosionRadius*2.5f);
                     //rb.AddTorque(Random.insideUnitSphere.normalized * 1000000.0f );
-                    //rb.AddTorque(Vector3.left*100.0f);
 
 
                     a.enabled = false;
@@ -67,7 +66,6 @@ public class BombAtClick : MonoBehaviour {
                     i++;
                 }
                 EffectsManager.instance.SpawnExplosion(hitInfo.point);
-                //Instantiate(theInstance, hitInfo.point, Quaternion.identity);
             }
         }
     }

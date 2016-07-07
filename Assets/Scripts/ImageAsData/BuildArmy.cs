@@ -11,10 +11,10 @@ public class BuildArmy : MonoBehaviour
         public Color32 color;
         public GameObject prefab;
     }
-
-    public float armyReferencePointX = 260;
-    public float armyReferencePointZ = 60;
+    
     public float formationSpacing = 3;
+    public bool keepCreating;
+    public float createDelayTime;
 
     private Vector3 armyBasePoint;
     private Color32 white;
@@ -47,9 +47,22 @@ public class BuildArmy : MonoBehaviour
     {
         white = new Color32(255, 255, 255, 255);
         army = GameObject.Find("Army");
-        //armyBasePoint = new Vector3(armyReferencePointX, 1.5f, armyReferencePointZ);
         armyBasePoint = transform.position;
         m_imageData = new ImageAsData<Vector3>(m_levelData, new PixelCoordinateConverterFlatGrid(m_cellSize));
+        if (keepCreating)
+        {
+            StartCoroutine(infiniteCreate());
+        }
+    }
+    
+    IEnumerator infiniteCreate()
+    {
+        //while (true)
+        for(int i = 0; i<4; i++)
+        {
+            Reload();
+            yield return new WaitForSeconds(createDelayTime);
+        }
     }
 
     void OnGUI()
@@ -82,11 +95,50 @@ public class BuildArmy : MonoBehaviour
     {
         Clean();
 
-        m_imageData.ReadAllPixels(OnPixel);
+        //m_imageData.ReadAllPixels(OnPixel);
 
-        AnchorMiddleSolider();
+        squareForm(10,10);
+
+        //AnchorMiddleSolider();
     }
 
+    void squareForm(int width, int height)
+    {
+        GameObject soldierParent = new GameObject();
+        GameObject[] soldiers = new GameObject[width * height];
+
+        for (int x = 0; x<width; x++)
+        {
+            for(int y = 0; y<height; y++)
+            {
+                soldiers[(width * y)+x] = (GameObject)Instantiate(m_fencePrefab, new Vector3(x,0,y) * formationSpacing, Quaternion.identity);
+                soldiers[(width * y)+x].transform.parent = soldierParent.transform;
+                soldiers[(width * y) + x].GetComponent<MarchingBehvaiour>().marchingDistance = m_cellSize;
+                soldiers[(width * y) + x].GetComponent<MarchingBehvaiour>().yRotation = transform.eulerAngles.y;
+            }
+        }
+        soldierParent.transform.parent = army.transform;
+        soldierParent.transform.position = transform.position;
+        soldierParent.transform.rotation = transform.rotation;
+        Debug.Log(soldiers.Length);
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (x != 0) // left
+                    soldiers[(width * y) + x].GetComponent<MarchingBehvaiour>().left = soldiers[(width * y) + x-1].transform;
+                if (x != width-1) // right
+                    soldiers[(width * y) + x].GetComponent<MarchingBehvaiour>().right = soldiers[(width * y) + x+1].transform;
+                if (y != 0) // backward
+                    soldiers[(width * y) + x].GetComponent<MarchingBehvaiour>().backward = soldiers[(width * (y-1)) + x].transform;
+                if (y != height-1) // forward
+                    soldiers[(width * y) + x].GetComponent<MarchingBehvaiour>().forward = soldiers[(width * (y+1)) + x].transform;
+
+            }
+        }
+    }
+
+    /*
     void AnchorMiddleSolider()
     {
         print("here");
@@ -105,15 +157,15 @@ public class BuildArmy : MonoBehaviour
                 spring.connectedBody = leader.GetComponent<Rigidbody>();
         }
     }
+    */
 
     void OnPixel(Color32 color, Vector3 position, PixelContext context)
     {
-        GameObject solider = null;
+        GameObject soldier = null;
         if (color.r == 0)
         {
-
-            solider = (GameObject)Instantiate(m_fencePrefab, armyBasePoint + position * formationSpacing, Quaternion.identity);
-            solider.transform.parent = army.transform;
+            soldier = (GameObject)Instantiate(m_fencePrefab, armyBasePoint + position * formationSpacing, Quaternion.identity);
+            soldier.transform.parent = army.transform;
         }
     }
 }
