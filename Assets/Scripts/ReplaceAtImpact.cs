@@ -3,9 +3,18 @@ using System.Collections;
 
 public class ReplaceAtImpact : MonoBehaviour
 {
+    // private FollowShell followShell;
+
+    public void Start()
+    {
+        // followShell = GameObject.Find("ShellMonitor").GetComponent<FollowShell>();
+    }
+
     public Transform explosionPrefab;
     void OnCollisionEnter(Collision collision)
     {
+        // followShell.HideShellMonitor();
+
         print("End:" + Time.time);
 
         ContactPoint contact = collision.contacts[0];

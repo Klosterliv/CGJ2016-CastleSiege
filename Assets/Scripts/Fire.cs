@@ -9,35 +9,38 @@ public class Fire : MonoBehaviour
     public const float cosOf45 = 0.52532198881f;
 
     public GameObject projectilePrefab;
+    public GameObject shellCameraPrefab;
+
     RaycastHit hitInfo;
     [SerializeField]
     LayerMask landscapeLayer, agentsLayer, deadLayer;
 
-    private Transform shellCam = null;
+    private GameObject shellCam = null;
+    private FollowShell followShell;
     private Cooldown cooldown;
+
 
     // Use this for initialization
     void Start()
     {
         cooldown = GetComponent<Cooldown>();
+        followShell = GameObject.Find("ShellMonitor").GetComponent<FollowShell>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && cooldown.isReady())
+        if (Input.GetMouseButtonDown(0) && cooldown.isReady() && !followShell.isShellVIew())
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out hitInfo, landscapeLayer);
             FireProjectile(hitInfo.point);
+
+            followShell.ShowShellMonitor();
             cooldown.Restart();
         }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (shellCam != null)
-                shellCam.gameObject.SetActive(false);
-        }
+
     }
 
     public float angle = 45;
@@ -50,14 +53,19 @@ public class Fire : MonoBehaviour
         var distance = Vector3.Distance(target, transform.position);
         var aim = (new Vector3(target.x, 0, target.z) - transform.position).normalized;
         var proj = (GameObject)Instantiate(projectilePrefab, transform.position, new Quaternion());
+
+        shellCam = (GameObject)Instantiate(shellCameraPrefab, transform.position, new Quaternion());
+
+        shellCam.transform.parent = proj.transform;
+
         Debug.DrawRay(transform.position, -transform.up * 10, Color.red);
 
         proj.GetComponent<Rigidbody>().AddForce(-transform.up * calculateForce(distance), ForceMode.Impulse);
 
-        shellCam = proj.transform.GetChild(0);
+        followShell.RegisterShellCam(shellCam.transform);
 
-        SwitchToShellCamera1();
-        Invoke("SwitchToShellCamera2", 1.5f);
+        shellCam.gameObject.SetActive(true);
+        // SwitchToShellCamera1();
     }
 
     public static float calculateForce(float distance)
