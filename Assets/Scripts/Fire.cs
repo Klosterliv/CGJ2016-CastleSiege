@@ -24,12 +24,17 @@ public class Fire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //print(hitInfo.point);
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out hitInfo, landscapeLayer);
             FireProjectile(hitInfo.point);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            shellCam.gameObject.SetActive(false);
         }
     }
 
@@ -49,9 +54,9 @@ public class Fire : MonoBehaviour
 
         shellCam = proj.transform.GetChild(0);
 
-        SwitchToShellCamera1();
-        Invoke("SwitchToShellCamera2", 1.5f);
-        Invoke("SwitchToShellCamera3", 4f);
+        //SwitchToShellCamera1();
+        //Invoke("SwitchToShellCamera2", 1.5f);
+        //Invoke("SwitchToShellCamera3", 4f);
     }
 
     public static float calculateForce(float distance)
@@ -63,22 +68,27 @@ public class Fire : MonoBehaviour
 
     private void SwitchToShellCamera1()
     {
+
         shellCam.transform.Translate(-Vector3.back * 20);
+        // shellCam.transform.Translate(Vector3.right * 20);
         shellCam.transform.LookAt(transform.position);
         shellCam.gameObject.SetActive(true);
+
+
     }
 
     private void SwitchToShellCamera2()
     {
-        shellCam.transform.Translate(Vector3.back * 2);
-        shellCam.transform.LookAt(transform.position);
+        shellCam.transform.Translate(-Vector3.back * 23);
+        shellCam.transform.Translate(Vector3.up * 2);
+        shellCam.transform.localRotation = Quaternion.Euler(0, 0, 0);
         shellCam.gameObject.SetActive(true);
     }
 
-    private void SwitchToShellCamera3()
-    {
-        shellCam.transform.Translate(-Vector3.back * 2);
-        shellCam.transform.LookAt(hitInfo.point);
-        shellCam.gameObject.SetActive(true);
-    }
+    //private void SwitchToShellCamera3()
+    //{
+    //    shellCam.transform.Translate(-Vector3.back * 3);
+    //    shellCam.transform.Translate(Vector3.up * 2);
+    //    shellCam.gameObject.SetActive(true);
+    //}
 }
