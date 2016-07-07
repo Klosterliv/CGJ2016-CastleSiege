@@ -12,12 +12,20 @@ public class ExplosionAtStart : MonoBehaviour {
         int i = 0;
         while (i < hitColliders.Length)
         {
+            float panicVal = ((explosionForce * 4.2f) - (hitColliders[i].transform.position - transform.position).magnitude) / (explosionForce * 4.2f);
+            //hitColliders[i].GetComponent<State>().Panic(panicVal);
+            hitColliders[i].GetComponent<State>().Panic(1.0f);
+
+
+            /*  --this functionality will be in 'state' script--
+             *  
             Quaternion newQuat = Quaternion.LookRotation(hitColliders[i].transform.position - transform.position);
             hitColliders[i].transform.rotation = newQuat;
 
 
             PanicAgentController p = hitColliders[i].GetComponent<PanicAgentController>();
             p.panicStrength += 3.0f;
+            */
             i++;
         }
 

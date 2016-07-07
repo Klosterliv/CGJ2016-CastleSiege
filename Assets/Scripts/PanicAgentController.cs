@@ -12,6 +12,6 @@ public class PanicAgentController : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
         panicStrength = Mathf.Min(panicStrength, 2.0f);
-        panicStrength *= 0.9857f;
+        panicStrength *= 0.9657f;
 	}
 }
