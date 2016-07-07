@@ -17,7 +17,7 @@ public class MoveInAir : MonoBehaviour
     void Update()
     {
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(rb.velocity) * Quaternion.Euler(90.0f, 0, 0), 0.1f);
+		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(rb.velocity) * Quaternion.Euler(90.0f, 0, 0), 20f*Time.deltaTime);
 
         //transform.LookAt(transform.position + rb.velocity);
         //  transform.localRotation *= Quaternion.Euler(90.0f, 0, 0);

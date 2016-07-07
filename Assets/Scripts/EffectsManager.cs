@@ -11,8 +11,13 @@ public class EffectsManager : MonoBehaviour {
 	GameObject bloodSplat;
     [SerializeField]
     GameObject explosionEffect;
+	[SerializeField] 
+	GameObject projectileTrailEffect;
+
+
     [SerializeField]
 	LayerMask nonAgentLayer;
+
 
 	void Awake()
 	{
@@ -52,4 +57,12 @@ public class EffectsManager : MonoBehaviour {
     public void SpawnExplosion(Vector3 explosionCenter) {
         Instantiate(explosionEffect, explosionCenter, Quaternion.identity);
     }
+
+	public void SpawnTrailEffect(Transform projectile) {
+		GameObject newTrail;
+		newTrail = (GameObject) Instantiate(projectileTrailEffect, projectile.position, projectile.rotation);
+		ProjectileTrailEffect trailScript = (ProjectileTrailEffect) newTrail.GetComponent(typeof(ProjectileTrailEffect));
+		trailScript.projectile = projectile;
+	}
+
 }
