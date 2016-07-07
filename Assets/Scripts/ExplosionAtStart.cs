@@ -48,7 +48,7 @@ public class ExplosionAtStart : MonoBehaviour {
                 
 
             Rigidbody rb = hitColliders[i].GetComponent<Rigidbody>();
-            rb.AddExplosionForce(explosionForce, transform.position + Vector3.down * 0.2f * explosionRadius, explosionRadius * 2.5f);
+            rb.AddExplosionForce(explosionForce*Random.RandomRange(0.0f,0.5f), transform.position + Vector3.down * 0.2f * explosionRadius, explosionRadius * 2.5f);
 
             i++;
         }

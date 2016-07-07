@@ -1,11 +1,10 @@
 fileFormatVersion: 2
 guid: ad4380521bd37644f9b9e9bb0101cba0
-timeCreated: 1467797083
+timeCreated: 1467918679
 licenseType: Free
 ShaderImporter:
   defaultTextures:
   - _Diffuse: {fileID: 2800000, guid: 9a06ccda88cf08040b15236734546bba, type: 3}
-  - _Glitterer: {fileID: 2800000, guid: 28c7aad1372ff114b90d330f8a2dd938, type: 3}
   - _Normal: {fileID: 2800000, guid: 877bc628b69844ba081a63095156a6f1, type: 3}
   - _alpha: {fileID: 2800000, guid: ba371855252614506947b2f28f1d8f17, type: 3}
   userData: 
