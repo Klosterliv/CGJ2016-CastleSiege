@@ -13,28 +13,30 @@ public class Fire : MonoBehaviour
     [SerializeField]
     LayerMask landscapeLayer, agentsLayer, deadLayer;
 
-    private GameObject crosshair;
     private Transform shellCam = null;
+    private Cooldown cooldown;
 
     // Use this for initialization
     void Start()
     {
+        cooldown = GetComponent<Cooldown>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && cooldown.isReady())
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out hitInfo, landscapeLayer);
             FireProjectile(hitInfo.point);
+            cooldown.Restart();
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            shellCam.gameObject.SetActive(false);
+            if (shellCam != null)
+                shellCam.gameObject.SetActive(false);
         }
     }
 
@@ -54,9 +56,8 @@ public class Fire : MonoBehaviour
 
         shellCam = proj.transform.GetChild(0);
 
-        //SwitchToShellCamera1();
-        //Invoke("SwitchToShellCamera2", 1.5f);
-        //Invoke("SwitchToShellCamera3", 4f);
+        SwitchToShellCamera1();
+        Invoke("SwitchToShellCamera2", 1.5f);
     }
 
     public static float calculateForce(float distance)
@@ -82,13 +83,5 @@ public class Fire : MonoBehaviour
         shellCam.transform.Translate(-Vector3.back * 23);
         shellCam.transform.Translate(Vector3.up * 2);
         shellCam.transform.localRotation = Quaternion.Euler(0, 0, 0);
-        shellCam.gameObject.SetActive(true);
     }
-
-    //private void SwitchToShellCamera3()
-    //{
-    //    shellCam.transform.Translate(-Vector3.back * 3);
-    //    shellCam.transform.Translate(Vector3.up * 2);
-    //    shellCam.gameObject.SetActive(true);
-    //}
 }
