@@ -8,14 +8,21 @@ public class Trajectory : MonoBehaviour
 
     private Vector3 distanceAwayFromZeroOnYVector;
     private float distanceAwayFromZeroOnY;
+    private Vector3[] points;
+
+    void Awake()
+    {
+        line = GetComponent<LineRenderer>();
+    }
 
     // Use this for initialization
     void Start()
     {
+        points = new Vector3[20];
         distanceAwayFromZeroOnYVector = new Vector3(0, transform.position.y, 0) - Vector3.zero;
         //print(distanceAwayFromZeroOnYVector.y);
         distanceAwayFromZeroOnY = distanceAwayFromZeroOnYVector.y;
-        line = this.gameObject.GetComponent<LineRenderer>();
+
     }
 
     // Update is called once per frame
@@ -24,25 +31,22 @@ public class Trajectory : MonoBehaviour
 
     }
 
-    public void DrawTrajectory(Vector3 target)
+    public void ShowTrajectory()
     {
         line.enabled = true;
+    }
 
-        //var g = 12.15f;\
+    public void DrawTrajectory(Vector3 target)
+    {
         var g = 16f;
-        // var g = 12f;
+
         var vertexCount = 20;
 
         line.SetVertexCount(vertexCount);
 
         float v_i = Fire.calculateForce(Vector3.Distance(target, transform.position));
-        // var v_y = v_i*Fire.sinOf45 - Fire.g * 
 
-        //print("Velocity:" + v_i);
-        //print("Vy:" + v_i * Fire.sinOf45);
-        //print("Velocity_y" + )
         float time = 2 * v_i * Fire.sinOf45 / g;
-        //print("T:" + time);
 
         var currentPosition = transform.position;
         var straightLineStep = (target - currentPosition) / vertexCount;
@@ -66,6 +70,7 @@ public class Trajectory : MonoBehaviour
             y += distanceAwayFromZeroOnY;
 
             var point = new Vector3(x, y, z);
+            points[i] = point;
             line.SetPosition(i, point);
 
             currentPosition += straightLineStep;
@@ -74,8 +79,27 @@ public class Trajectory : MonoBehaviour
 
     }
 
-    public void Clear()
+    public void Hide()
     {
         line.enabled = false;
     }
+
+    public Vector3 GetPoint(int index)
+    {
+        return points[index];
+    }
+
+    public Vector3 GetAverage(int count)
+    {
+
+        Vector3 average = Vector3.zero;
+        for (int i = 0; i < count; i++)
+        {
+            average += points[i];
+        }
+
+        return average / count;
+    }
+
+
 }
