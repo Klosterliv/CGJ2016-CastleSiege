@@ -7,9 +7,11 @@ public class ReplaceAtImpact : MonoBehaviour
     private Vector3 target;
     public GameObject pointOfImpactMarkerPrefab;
     private GameObject pointOfImpactMarker;
+    private bool isExploding;
 
     public void Start()
     {
+        isExploding = false;
         MarkImpactPoint();
         // followShell = GameObject.Find("ShellMonitor").GetComponent<FollowShell>();
     }
@@ -17,20 +19,24 @@ public class ReplaceAtImpact : MonoBehaviour
     public Transform explosionPrefab;
     void OnCollisionEnter(Collision collision)
     {
-        // followShell.HideShellMonitor();
+        if (isExploding == false)
+        {
+            isExploding = true;
+            // followShell.HideShellMonitor();
 
-        print("End:" + Time.time);
+            print("End:" + Time.time);
 
-        ContactPoint contact = collision.contacts[0];
+            ContactPoint contact = collision.contacts[0];
 
-        // Rotate the object so that the y-axis faces along the normal of the surface
-        Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-        Vector3 pos = contact.point;
+            // Rotate the object so that the y-axis faces along the normal of the surface
+            Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
+            Vector3 pos = contact.point;
 
-        Destroy(pointOfImpactMarker);
+            Destroy(pointOfImpactMarker);
 
-        Instantiate(explosionPrefab, pos, rot);
-        Destroy(gameObject);
+            Instantiate(explosionPrefab, pos, rot);
+            Destroy(gameObject);
+        }
     }
 
     public void RegisterImpactPoint(Vector3 target)

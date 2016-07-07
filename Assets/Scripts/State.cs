@@ -15,7 +15,7 @@ public class State : MonoBehaviour
     private aiAttack aiAttack;
 
     public bool alive;
-    public enum aiState { marching, panicking, dead, attacking };
+    public enum aiState { marching, panicking, dead, attacking, charge};
     public aiState currentState;
     //public bool panicking = false;
 
@@ -75,13 +75,17 @@ public class State : MonoBehaviour
     {
         if (alive)
         {
+            
+            currentState = aiState.charge;
+            //Destroy(gameObject);
+            /*
             turnTowardsCastle.enabled = false;
-            currentState = aiState.attacking;
             forwardMovement.enabled = false;
             attraction.enabled = false;
             marchingBehaviour.enabled = false;
             aiAttack.enabled = true;
             aiAttack.attackedStructure = attackMe;
+            */
         }
     }
 }
