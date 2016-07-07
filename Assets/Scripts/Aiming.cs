@@ -35,7 +35,7 @@ public class Aiming : MonoBehaviour
         }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(ray, out hitInfo, landscapeLayer);
+        Physics.Raycast(ray, out hitInfo, landscapeLayer, 1);
 
         crosshair.transform.position = hitInfo.point;
 
@@ -49,7 +49,7 @@ public class Aiming : MonoBehaviour
         var p = trajectory.GetPoint(4);
         //  var p = trajectory.GetAverage(5);
 
-       // barrel.transform.LookAt(p);
+        // barrel.transform.LookAt(p);
     }
 
     void SmoothLook(Vector3 newDirection)
