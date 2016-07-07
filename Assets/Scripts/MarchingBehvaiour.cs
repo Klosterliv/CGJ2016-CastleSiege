@@ -69,9 +69,9 @@ public class MarchingBehvaiour : MonoBehaviour {
             pac.panicStrength += 0.06f;
         }
 
-        if(pac.panicStrength>0.6f)
+        if(pac.panicStrength>0.4f)
         {
-            GetComponent<State>().Panic(2.0f);
+            GetComponent<State>().Panic(0.2f);
             enabled = false;
         }
 
