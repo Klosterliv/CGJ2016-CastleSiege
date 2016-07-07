@@ -12,33 +12,32 @@ public class State : MonoBehaviour
     private MarchingBehvaiour marchingBehaviour;
 
     public bool alive;
-    public bool panicking = false;
+    public enum aiState { marching, panicking, dead, attacking };
+    public aiState currentState;
+    //public bool panicking = false;
 
     // Use this for initialization
     void Start()
     {
         forwardMovement = GetComponent<ForwardMovement>();
-        //springJoint = GetComponent<SpringJoint>();
         attraction = GetComponent<Attraction>();
         marchingBehaviour = GetComponent<MarchingBehvaiour>();
-
-        //Panic();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void marching()
     {
-
-        //if (Time.unscaledTime > 3 && !panicking)
-        //{
-        //    Panic();
-        //}
-
+        if (alive)
+        {
+            currentState = aiState.marching;
+            forwardMovement.enabled = true;
+            attraction.enabled = false;
+            marchingBehaviour.enabled = true;
+        }
     }
 
     public void kill()
     {
-        //Debug.Log("killed!");
+        currentState = aiState.dead;
         alive = false;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
@@ -55,13 +54,10 @@ public class State : MonoBehaviour
     {
         if (alive)
         {
-            //print("panic!");
+            currentState = aiState.panicking;
             forwardMovement.marching = false;
-            marchingBehaviour.enabled = false;
-            //springJoint.connectedBody = null;
-            //springJoint.spring = 0.0f;
-            panicking = true;
             attraction.enabled = true;
+            marchingBehaviour.enabled = false;
         }
     }
 }

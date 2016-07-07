@@ -3,12 +3,11 @@ using System.Collections;
 
 public class MoveInAir : MonoBehaviour
 {
-
     Rigidbody rb;
     // Use this for initialization
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = transform.parent.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -16,6 +15,6 @@ public class MoveInAir : MonoBehaviour
     {
 
         transform.LookAt(transform.position + rb.velocity);
-
+        transform.localRotation *= Quaternion.Euler(90.0f, 0, 0);
     }
 }
