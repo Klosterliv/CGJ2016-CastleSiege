@@ -13,8 +13,8 @@ public class Fire : MonoBehaviour
     [SerializeField]
     LayerMask landscapeLayer, agentsLayer, deadLayer;
 
-
     private GameObject crosshair;
+    private Transform shellCam = null;
 
     // Use this for initialization
     void Start()
@@ -46,6 +46,12 @@ public class Fire : MonoBehaviour
         Debug.DrawRay(transform.position, -transform.up * 10, Color.red);
 
         proj.GetComponent<Rigidbody>().AddForce(-transform.up * calculateForce(distance), ForceMode.Impulse);
+
+        shellCam = proj.transform.GetChild(0);
+
+        SwitchToShellCamera1();
+        Invoke("SwitchToShellCamera2", 1.5f);
+        Invoke("SwitchToShellCamera3", 4f);
     }
 
     public static float calculateForce(float distance)
@@ -55,4 +61,24 @@ public class Fire : MonoBehaviour
         return Mathf.Sqrt(v);
     }
 
+    private void SwitchToShellCamera1()
+    {
+        shellCam.transform.Translate(-Vector3.back * 20);
+        shellCam.transform.LookAt(transform.position);
+        shellCam.gameObject.SetActive(true);
+    }
+
+    private void SwitchToShellCamera2()
+    {
+        shellCam.transform.Translate(Vector3.back * 2);
+        shellCam.transform.LookAt(transform.position);
+        shellCam.gameObject.SetActive(true);
+    }
+
+    private void SwitchToShellCamera3()
+    {
+        shellCam.transform.Translate(-Vector3.back * 2);
+        shellCam.transform.LookAt(hitInfo.point);
+        shellCam.gameObject.SetActive(true);
+    }
 }

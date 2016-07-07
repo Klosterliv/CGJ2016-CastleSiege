@@ -120,7 +120,7 @@ public class BuildArmy : MonoBehaviour
         soldierParent.transform.parent = army.transform;
         soldierParent.transform.position = transform.position;
         soldierParent.transform.rotation = transform.rotation;
-        Debug.Log(soldiers.Length);
+        //Debug.Log(soldiers.Length);
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)

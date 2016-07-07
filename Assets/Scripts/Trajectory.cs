@@ -13,7 +13,7 @@ public class Trajectory : MonoBehaviour
     void Start()
     {
         distanceAwayFromZeroOnYVector = new Vector3(0, transform.position.y, 0) - Vector3.zero;
-        print(distanceAwayFromZeroOnYVector.y);
+        //print(distanceAwayFromZeroOnYVector.y);
         distanceAwayFromZeroOnY = distanceAwayFromZeroOnYVector.y;
         line = this.gameObject.GetComponent<LineRenderer>();
     }
@@ -38,11 +38,11 @@ public class Trajectory : MonoBehaviour
         float v_i = Fire.calculateForce(Vector3.Distance(target, transform.position));
         // var v_y = v_i*Fire.sinOf45 - Fire.g * 
 
-        print("Velocity:" + v_i);
-        print("Vy:" + v_i * Fire.sinOf45);
+        //print("Velocity:" + v_i);
+        //print("Vy:" + v_i * Fire.sinOf45);
         //print("Velocity_y" + )
         float time = 2 * v_i * Fire.sinOf45 / g;
-        print("T:" + time);
+        //print("T:" + time);
 
         var currentPosition = transform.position;
         var straightLineStep = (target - currentPosition) / vertexCount;
