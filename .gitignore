@@ -30,3 +30,15 @@ sysinfo.txt
 *.unitypackage
 Assets/ShaderForge/
 Assets/ShaderForge.meta
+Assets/elias/
+Assets/StreamingAssets/ELIAS_Themes/demo/audio/Stinger 5 V2.ogg
+Assets/StreamingAssets/
+Assets/StreamingAssets.meta
+Assets/Standard Assets/
+Assets/Plugins/
+Assets/Plugins.meta
+Assets/Editor/
+Assets/Editor.meta
+Assets/elias_unity_plugin_1.5/
+Assets/elias.meta
+Assets/elias_unity_plugin_1.5.meta

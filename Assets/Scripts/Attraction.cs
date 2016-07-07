@@ -39,7 +39,7 @@ public class Attraction : MonoBehaviour {
                 if(hitInfo.transform.GetComponent<State>().currentState == State.aiState.attacking)
                 {
                     //transform.rotation = Quaternion.LookRotation(-transform.right);
-                    Debug.Log("this is happening!");
+                    //Debug.Log("this is happening!");
                     pac.panicStrength += 1.2f;
                 } else
                 {
