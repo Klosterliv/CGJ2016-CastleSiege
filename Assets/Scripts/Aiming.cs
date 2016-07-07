@@ -35,7 +35,7 @@ public class Aiming : MonoBehaviour
         }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(ray, out hitInfo, landscapeLayer, 1);
+        Physics.Raycast(ray, out hitInfo, 999999, landscapeLayer, QueryTriggerInteraction.Ignore);
 
         crosshair.transform.position = hitInfo.point;
 
