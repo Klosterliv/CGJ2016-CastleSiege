@@ -18,11 +18,13 @@ public class Fire : MonoBehaviour
     private GameObject shellCam = null;
     private FollowShell followShell;
     private Cooldown cooldown;
+    private Ammo ammo;
 
     // Use this for initialization
     void Start()
     {
-        cooldown = GetComponent<Cooldown>();
+        cooldown = GameObject.Find("Ammo").GetComponent<Cooldown>();
+        ammo = GameObject.Find("Ammo").GetComponent<Ammo>();
         followShell = GameObject.Find("ShellMonitor").GetComponent<FollowShell>();
     }
 
@@ -36,7 +38,8 @@ public class Fire : MonoBehaviour
             FireProjectile(hitInfo.point);
 
             followShell.ShowShellMonitor();
-            cooldown.Restart();
+            ammo.decreaseAmmo();
+            // cooldown.Restart();
         }
 
 
