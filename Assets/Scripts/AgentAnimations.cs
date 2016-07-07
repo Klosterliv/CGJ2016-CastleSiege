@@ -12,6 +12,9 @@ public class AgentAnimations : MonoBehaviour {
 	float hopSpeed;
 	[SerializeField] 
 	State state;
+	[SerializeField]
+	Transform helmet;
+	Vector3 helmetOffset;
 
 	Rigidbody rbody;
 	float velocity;
@@ -19,6 +22,7 @@ public class AgentAnimations : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rbody = (Rigidbody)transform.parent.GetComponent(typeof(Rigidbody));
+		helmetOffset = transform.position-helmet.position;
 	}
 	
 	// Update is called once per frame
@@ -47,6 +51,10 @@ public class AgentAnimations : MonoBehaviour {
 
         //transform.position = (hopAnimation.Evaluate(hopTimeOffset) * (panicAgentController.panicStrength * 0.1f + 1)) * Vector3.up + transform.position;
 
+		if (helmet.position.y < newPos.y+helmetOffset.y)
+			helmet.position = newPos+helmetOffset;
+		else
+			helmet.position = Vector3.Lerp(helmet.position, newPos+helmetOffset, Time.deltaTime*5);
 
 
 
