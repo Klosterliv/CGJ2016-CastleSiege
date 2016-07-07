@@ -37,6 +37,14 @@ public class Aiming : MonoBehaviour
         var aim = (new Vector3(crosshair.transform.position.x, transform.position.y, crosshair.transform.position.z) - transform.position);
         Debug.DrawRay(transform.position, aim);
 
-        transform.LookAt(new Vector3(crosshair.transform.position.x, transform.position.y, crosshair.transform.position.z));
+        var dir = new Vector3(crosshair.transform.position.x, transform.position.y, crosshair.transform.position.z);
+
+        SmoothLook(aim);
+    }
+
+    void SmoothLook(Vector3 newDirection)
+    {
+        var rotation = Quaternion.LookRotation(newDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
     }
 }

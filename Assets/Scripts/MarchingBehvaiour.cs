@@ -41,6 +41,10 @@ public class MarchingBehvaiour : MonoBehaviour {
 
     void checkForce(Transform direction)
     {
+        if(direction.GetComponent<State>().currentState == State.aiState.attacking)
+        {
+            GetComponent<State>().Panic(0.6f);
+        }
         yRotation = Mathf.Lerp(yRotation, direction.GetComponent<MarchingBehvaiour>().yRotation, 0.4f);
         if ((transform.position - direction.position).magnitude > marchingDistance * 2.8f)
         {
