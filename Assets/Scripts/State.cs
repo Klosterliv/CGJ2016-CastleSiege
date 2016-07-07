@@ -36,7 +36,7 @@ public class State : MonoBehaviour
         {
             currentState = aiState.marching;
             forwardMovement.enabled = true;
-            attraction.enabled = false;
+            attraction.enabled = true;
             marchingBehaviour.enabled = true;
         }
     }

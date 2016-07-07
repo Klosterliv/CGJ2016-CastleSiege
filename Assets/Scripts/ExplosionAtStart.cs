@@ -52,6 +52,26 @@ public class ExplosionAtStart : MonoBehaviour {
 
             i++;
         }
+
+        hitColliders = Physics.OverlapSphere(transform.position, explosionRadius*0.3f, (agentsLayer + deadLayer));
+
+        //Time.timeScale = 
+
+        i = 0;
+        while (i < hitColliders.Length)
+        {
+            State s = hitColliders[i].GetComponent<State>();
+            if (shouldKill)
+            {
+                s.kill();
+            }
+
+
+            Rigidbody rb = hitColliders[i].GetComponent<Rigidbody>();
+            rb.AddExplosionForce(explosionForce * Random.RandomRange(0.0f, 1.0f), transform.position + Vector3.down * 0.2f * explosionRadius, explosionRadius * 2.5f);
+
+            i++;
+        }
     }
 	
 	// Update is called once per frame
