@@ -19,7 +19,6 @@ public class Fire : MonoBehaviour
     private FollowShell followShell;
     private Cooldown cooldown;
 
-
     // Use this for initialization
     void Start()
     {
@@ -53,6 +52,7 @@ public class Fire : MonoBehaviour
         var distance = Vector3.Distance(target, transform.position);
         var aim = (new Vector3(target.x, 0, target.z) - transform.position).normalized;
         var proj = (GameObject)Instantiate(projectilePrefab, transform.position, new Quaternion());
+        proj.GetComponent<ReplaceAtImpact>().RegisterImpactPoint(target);
 
         shellCam = (GameObject)Instantiate(shellCameraPrefab, transform.position, new Quaternion());
 
@@ -65,31 +65,14 @@ public class Fire : MonoBehaviour
         followShell.RegisterShellCam(shellCam.transform);
 
         shellCam.gameObject.SetActive(true);
-        // SwitchToShellCamera1();
     }
+
+
 
     public static float calculateForce(float distance)
     {
         var v = distance * g / 2 * sinOf45 * cosOf45;
 
         return Mathf.Sqrt(v);
-    }
-
-    private void SwitchToShellCamera1()
-    {
-
-        shellCam.transform.Translate(-Vector3.back * 20);
-        // shellCam.transform.Translate(Vector3.right * 20);
-        shellCam.transform.LookAt(transform.position);
-        shellCam.gameObject.SetActive(true);
-
-
-    }
-
-    private void SwitchToShellCamera2()
-    {
-        shellCam.transform.Translate(-Vector3.back * 23);
-        shellCam.transform.Translate(Vector3.up * 2);
-        shellCam.transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
 }
