@@ -17,6 +17,8 @@ public class EffectsManager : MonoBehaviour {
 	GameObject muzzleFlash;
 	[SerializeField] 
 	GameObject bulletTrace;
+	[SerializeField]
+	GameObject sparksEffect;
 
 
     [SerializeField]
@@ -86,6 +88,11 @@ public class EffectsManager : MonoBehaviour {
 		traceMat.SetFloat("_distance", vector.magnitude);
 		traceMat.SetFloat("_timestamp", Time.time);
 
+	}
+
+	public void SpawnSparks (Vector3 point) {
+		GameObject newSparks;
+		newSparks = (GameObject) Instantiate(sparksEffect, point, Quaternion.identity);
 	}
 
 }
