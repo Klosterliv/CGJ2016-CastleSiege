@@ -13,6 +13,8 @@ public class State : MonoBehaviour
     private MarchingBehvaiour marchingBehaviour;
     private PanicAgentController pac;
 
+    bool isBleeding;
+
     public bool alive;
     public enum aiState { marching, panicking, dead, attacking };
     public aiState currentState;
@@ -21,6 +23,7 @@ public class State : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        isBleeding = false;
         forwardMovement = GetComponent<ForwardMovement>();
         attraction = GetComponent<Attraction>();
         marchingBehaviour = GetComponent<MarchingBehvaiour>();
@@ -50,8 +53,19 @@ public class State : MonoBehaviour
 
         gameObject.layer = 10;
 
-        EffectsManager.instance.SpawnBlood(transform);
-        EffectsManager.instance.SpawnBloodSplat(transform);
+        if (isBleeding == false)
+        {
+            EffectsManager.instance.SpawnBlood(transform);
+            EffectsManager.instance.SpawnBloodSplat(transform);
+            isBleeding = true;
+            Invoke("resetBleeding", 2);
+        }
+        
+    }
+
+    void resetBleeding()
+    {
+        isBleeding = false;
     }
 
     public void Panic(float addPanicAmount)

@@ -58,11 +58,11 @@ public class BuildArmy : MonoBehaviour
     IEnumerator infiniteCreate()
     {
         //while (true)
-        for(int i = 0; i<4; i++)
-        {
+        //for(int i = 0; i<4; i++)
+        //{
             Reload();
             yield return new WaitForSeconds(createDelayTime);
-        }
+        //}
     }
 
     void OnGUI()

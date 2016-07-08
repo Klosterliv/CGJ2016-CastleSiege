@@ -58,10 +58,10 @@ public class BombAtClick : MonoBehaviour {
                     a.enabled = false;
                     f.enabled = false;
                     g.layer = 10;
-
+                    /*
                     EffectsManager.instance.SpawnBlood(g.transform); // trails + splatter from trail
                     EffectsManager.instance.SpawnBloodSplat(g.transform); // groundsplatter
-                    
+                    */
 
                     i++;
                 }
