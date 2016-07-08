@@ -12,10 +12,9 @@ public class State : MonoBehaviour
     private TurnTowardsCastle turnTowardsCastle;
     private MarchingBehvaiour marchingBehaviour;
     private PanicAgentController pac;
-    private aiAttack aiAttack;
 
     public bool alive;
-    public enum aiState { marching, panicking, dead, attacking, charge};
+    public enum aiState { marching, panicking, dead, attacking };
     public aiState currentState;
     //public bool panicking = false;
 
@@ -27,7 +26,6 @@ public class State : MonoBehaviour
         marchingBehaviour = GetComponent<MarchingBehvaiour>();
         turnTowardsCastle = GetComponent<TurnTowardsCastle>();
         pac = GetComponent<PanicAgentController>();
-        aiAttack = GetComponent<aiAttack>();
     }
 
     public void marching()
@@ -36,7 +34,7 @@ public class State : MonoBehaviour
         {
             currentState = aiState.marching;
             forwardMovement.enabled = true;
-            attraction.enabled = true;
+            attraction.enabled = false;
             marchingBehaviour.enabled = true;
         }
     }
@@ -49,7 +47,6 @@ public class State : MonoBehaviour
         attraction.enabled = false;
         forwardMovement.enabled = false;
         turnTowardsCastle.enabled = false;
-        aiAttack.enabled = false;
 
         gameObject.layer = 10;
 
@@ -67,7 +64,6 @@ public class State : MonoBehaviour
             attraction.enabled = true;
             marchingBehaviour.enabled = false;
             pac.panicStrength += addPanicAmount;
-            aiAttack.enabled = false;
         }
     }
     
@@ -75,17 +71,11 @@ public class State : MonoBehaviour
     {
         if (alive)
         {
-            
-            currentState = aiState.charge;
-            //Destroy(gameObject);
-            /*
             turnTowardsCastle.enabled = false;
+            currentState = aiState.attacking;
             forwardMovement.enabled = false;
             attraction.enabled = false;
             marchingBehaviour.enabled = false;
-            aiAttack.enabled = true;
-            aiAttack.attackedStructure = attackMe;
-            */
         }
     }
 }
