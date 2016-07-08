@@ -103,12 +103,14 @@ public class BuildArmy : MonoBehaviour
 
         //m_imageData.ReadAllPixels(OnPixel);
 
-        squareForm(width, height, waypoint);
+        //squareForm(width, height, waypoint);
+        StartCoroutine(squareForm(width, height, waypoint));
 
         //AnchorMiddleSolider();
     }
 
-    void squareForm(int width, int height, Vector3 waypoint)
+    //void squareForm(int width, int height, Vector3 waypoint)
+    IEnumerator squareForm(int width, int height, Vector3 waypoint)
     {
         GameObject soldierParent = new GameObject();
         GameObject[] soldiers = new GameObject[width * height];
@@ -156,6 +158,7 @@ public class BuildArmy : MonoBehaviour
 
             }
         }
+        yield return null;
     }
 
     /*
