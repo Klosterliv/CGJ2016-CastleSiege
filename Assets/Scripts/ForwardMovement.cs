@@ -31,7 +31,7 @@ public class ForwardMovement : MonoBehaviour
 
     void March()
     {
-        rb.AddForce(transform.forward * force);
+        rb.AddForce(transform.forward * force * 1.2f);
     }
 
     void RunInPanic()
