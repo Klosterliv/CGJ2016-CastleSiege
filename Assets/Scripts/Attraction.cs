@@ -24,7 +24,8 @@ public class Attraction : MonoBehaviour {
     void Start () {
         loopCounter = Random.Range(0, skipValue);
         rb = GetComponent<Rigidbody>();
-	}
+        pac = GetComponent<PanicAgentController>();
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -32,9 +33,9 @@ public class Attraction : MonoBehaviour {
         if (loopCounter >= skipValue)
         {
             loopCounter = 0;
-            pac = GetComponent<PanicAgentController>();
+            
 
-            if (rb.velocity.magnitude < 0.08f)
+            if (rb.velocity.magnitude < 0.8f)
             {
                 pac.panicStrength += 0.3f;
             }
@@ -71,7 +72,7 @@ public class Attraction : MonoBehaviour {
             {
                 newQuat = Quaternion.LookRotation(transform.position - hitInfo.transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, newQuat, 0.3f);
-                pac.panicStrength += 0.9f;
+                pac.panicStrength += 0.4f;
             }
         }
 	}
