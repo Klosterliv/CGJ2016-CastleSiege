@@ -40,7 +40,7 @@ public class Attraction : MonoBehaviour {
             }
 
             lookRay = new Ray(transform.position, new Vector3(Random.insideUnitCircle.x, 0, Random.insideUnitCircle.y));
-            Debug.DrawRay(lookRay.origin, lookRay.direction*findNeighbourDistance);
+            //Debug.DrawRay(lookRay.origin, lookRay.direction*findNeighbourDistance);
             if (Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance, agentsLayer)) // finding something
             {
                 if(hitInfo.transform.GetComponent<State>().currentState == State.aiState.attacking)
@@ -71,7 +71,7 @@ public class Attraction : MonoBehaviour {
             {
                 newQuat = Quaternion.LookRotation(transform.position - hitInfo.transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, newQuat, 0.3f);
-                pac.panicStrength += 1.6f;
+                pac.panicStrength += 0.9f;
             }
         }
 	}
