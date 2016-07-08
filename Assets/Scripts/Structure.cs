@@ -23,6 +23,9 @@ public class Structure : MonoBehaviour {
 	bool dying = false;
 	float deathcounter = 6;
 
+	public DemoPlayer MusicPlayer;
+
+
 	// Use this for initialization
 	void Start () {
 
@@ -60,6 +63,8 @@ public class Structure : MonoBehaviour {
 		DamageOffset();
 
 		damageDebrisSmoke.Emit((int)(damage*5));
+
+		//MusicPlayer.SetLevel(3,3,100,0,0,0);
 		
 	}
 
