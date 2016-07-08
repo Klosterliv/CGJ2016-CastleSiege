@@ -13,10 +13,6 @@ public class EffectsManager : MonoBehaviour {
     GameObject explosionEffect;
 	[SerializeField] 
 	GameObject projectileTrailEffect;
-	[SerializeField]
-	GameObject muzzleFlash;
-	[SerializeField] 
-	GameObject bulletTrace;
 
 
     [SerializeField]
@@ -69,23 +65,10 @@ public class EffectsManager : MonoBehaviour {
 		trailScript.projectile = projectile;
 	}
 
-	public void SpawnMuzzleFlash(Transform muzzle) {
-		GameObject newFlash;
-		newFlash = (GameObject) Instantiate(muzzleFlash, muzzle.position, muzzle.rotation);
-	}
+    public void SpawnCannonFlash()
+    {
 
-	public void SpawnBulletTrace(Vector3 origin, Vector3 vector) {
-		GameObject newTrace;
-		newTrace = (GameObject) Instantiate(bulletTrace, origin, Quaternion.identity);
+    }
 
-		LineRenderer trace = (LineRenderer) newTrace.GetComponent(typeof(LineRenderer));
-		trace.SetPosition(0, origin);
-		trace.SetPosition(1, origin+vector);
-
-		Material traceMat = trace.material;
-		traceMat.SetFloat("_distance", vector.magnitude);
-		traceMat.SetFloat("_timestamp", Time.time);
-
-	}
 
 }
