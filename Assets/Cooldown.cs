@@ -9,6 +9,7 @@ public class Cooldown : MonoBehaviour
     public Slider slider;
     private float current = 0;
     private float cooldownStep = 0.1f;
+    private Ammo ammo;
 
     // Use this for initialization
     void Start()
@@ -16,6 +17,7 @@ public class Cooldown : MonoBehaviour
         HiderSlider();
         slider.maxValue = cooldown;
         slider.value = cooldown;
+        ammo = GetComponent<Ammo>();
 
     }
 
@@ -34,7 +36,11 @@ public class Cooldown : MonoBehaviour
             slider.value = current;
 
             if (isReady())
+            {
+                ammo.GenerateVisualAmmo();
                 HiderSlider();
+            }
+
         }
 
     }
@@ -42,7 +48,6 @@ public class Cooldown : MonoBehaviour
     public bool isReady()
     {
         return current <= 0;
-
     }
 
     public void Restart()

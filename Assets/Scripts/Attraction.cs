@@ -33,7 +33,14 @@ public class Attraction : MonoBehaviour {
         {
             loopCounter = 0;
             pac = GetComponent<PanicAgentController>();
+
+            if (rb.velocity.magnitude < 0.08f)
+            {
+                pac.panicStrength += 0.3f;
+            }
+
             lookRay = new Ray(transform.position, new Vector3(Random.insideUnitCircle.x, 0, Random.insideUnitCircle.y));
+            Debug.DrawRay(lookRay.origin, lookRay.direction*findNeighbourDistance);
             if (Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance, agentsLayer)) // finding something
             {
                 if(hitInfo.transform.GetComponent<State>().currentState == State.aiState.attacking)
@@ -58,13 +65,13 @@ public class Attraction : MonoBehaviour {
                 }
 
                 hitPac = hitInfo.transform.GetComponent<PanicAgentController>();
-                pac.panicStrength = Mathf.Lerp(pac.panicStrength, hitPac.panicStrength, 0.7f);
+                pac.panicStrength = Mathf.Lerp(pac.panicStrength, hitPac.panicStrength*1.2f, 0.7f);
 
             } else if(Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance, deadLayer, QueryTriggerInteraction.Collide)) // finding dead people
             {
                 newQuat = Quaternion.LookRotation(transform.position - hitInfo.transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, newQuat, 0.3f);
-                pac.panicStrength += 0.6f;
+                pac.panicStrength += 1.6f;
             }
         }
 	}

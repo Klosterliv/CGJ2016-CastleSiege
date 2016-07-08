@@ -15,7 +15,7 @@ public class ForwardMovement : MonoBehaviour
 
     void Start()
     {
-        loopCounter = Random.Range(0, skipValue);
+        //loopCounter = Random.Range(0, skipValue);
         noiseOffset = Random.Range(0.0f, 1000.0f);
         rb = GetComponent<Rigidbody>();
     }

@@ -5,6 +5,7 @@ public class Aiming : MonoBehaviour
 {
     public GameObject crosshairPrefab;
     private GameObject crosshair;
+    private MovingBarrel barrel;
     RaycastHit hitInfo;
     [SerializeField]
     LayerMask landscapeLayer, agentsLayer, deadLayer;
@@ -12,25 +13,29 @@ public class Aiming : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        trajectory = GetComponent<Trajectory>();
+        barrel = transform.FindChild("VisualCylinder").GetComponent<MovingBarrel>();
+        trajectory = transform.FindChild("Cylinder").GetComponent<Trajectory>();
         crosshair = (GameObject)Instantiate(crosshairPrefab);
+        trajectory.Hide();
     }
 
     // Update is called once per frame
     void Update()
     {
+        trajectory.DrawTrajectory(crosshair.transform.position);
+
         if (Input.GetMouseButton(1))
         {
-            trajectory.DrawTrajectory(crosshair.transform.position);
+            trajectory.ShowTrajectory();
         }
 
         if (Input.GetMouseButtonUp(1))
         {
-            trajectory.Clear();
+            trajectory.Hide();
         }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(ray, out hitInfo, landscapeLayer);
+        Physics.Raycast(ray, out hitInfo, 999999, landscapeLayer, QueryTriggerInteraction.Ignore);
 
         crosshair.transform.position = hitInfo.point;
 
@@ -39,7 +44,12 @@ public class Aiming : MonoBehaviour
 
         var dir = new Vector3(crosshair.transform.position.x, transform.position.y, crosshair.transform.position.z);
 
-        SmoothLook(aim);
+        transform.LookAt(dir);
+        //print(trajectory.GetPoint(3));
+        var p = trajectory.GetPoint(4);
+        //  var p = trajectory.GetAverage(5);
+
+        // barrel.transform.LookAt(p);
     }
 
     void SmoothLook(Vector3 newDirection)
