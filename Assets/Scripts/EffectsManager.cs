@@ -113,6 +113,10 @@ public class EffectsManager : MonoBehaviour
         smoke.SetActive(true);
         smoke.transform.position += position;
         smoke.transform.rotation = Quaternion.LookRotation(-parent.up, Vector3.up);
+
+        flash.GetComponent<DestroyAfterPlay>().enabled = true;
+        smoke.GetComponent<DestroyAfterPlay>().enabled = true;
+
     }
 
 }

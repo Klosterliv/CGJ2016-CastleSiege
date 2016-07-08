@@ -50,8 +50,7 @@ public class Fire : MonoBehaviour
 
     private void FireProjectile(Vector3 target)
     {
-        print("Start:" + Time.time);
-
+ 
         var distance = Vector3.Distance(target, transform.position);
         var aim = (new Vector3(target.x, 0, target.z) - transform.position).normalized;
         var proj = (GameObject)Instantiate(projectilePrefab, transform.position, new Quaternion());
