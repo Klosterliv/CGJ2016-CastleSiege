@@ -23,6 +23,7 @@ public class Fire : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         cooldown = GameObject.Find("Ammo").GetComponent<Cooldown>();
         ammo = GameObject.Find("Ammo").GetComponent<Ammo>();
         followShell = GameObject.Find("ShellMonitor").GetComponent<FollowShell>();
@@ -48,7 +49,7 @@ public class Fire : MonoBehaviour
     public float angle = 45;
     public float force = 10;
 
-    private void FireProjectile(Vector3 target)
+    public void FireProjectile(Vector3 target)
     {
  
         var distance = Vector3.Distance(target, transform.position);
