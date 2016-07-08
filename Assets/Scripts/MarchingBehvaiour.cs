@@ -5,19 +5,25 @@ public class MarchingBehvaiour : MonoBehaviour {
     public Transform left, right, forward, backward;
     //public Transform left, right, forward;
     public float marchingDistance, strengthAttract, strengthAvoid;
-    public float yRotation;
     private Rigidbody rb;
     private PanicAgentController pac;
+    private bool itsBeenAWhile;
+
+    public Transform masterPoint;
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
         pac = GetComponent<PanicAgentController>();
+        Invoke("nowItsBeenAWhile", 3.0f);
 	}
+
+    void nowItsBeenAWhile()
+    {
+        itsBeenAWhile = true;
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        transform.rotation = Quaternion.Euler(0, yRotation, 0);
-        yRotation = Mathf.Lerp(yRotation, Quaternion.LookRotation(GetComponent<TurnTowardsCastle>().castlePoint - transform.position).eulerAngles.y, 0.1f);
         rb.AddForce(transform.forward);
 
         float maxSpeed = 5.5f;
@@ -25,6 +31,15 @@ public class MarchingBehvaiour : MonoBehaviour {
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
+
+        if(masterPoint.parent.GetComponent<State>().currentState != State.aiState.marching)
+        {
+            rb.AddForce((masterPoint.position - transform.position) * 2.7f);
+        } else
+        {
+            // maybe make them panic here (when the middle soldier isn't marching anymore)
+        }
+        
         
         //// left
         if (left != null)
@@ -57,19 +72,20 @@ public class MarchingBehvaiour : MonoBehaviour {
         {
             GetComponent<State>().Panic(0.6f);
         }
-        yRotation = Mathf.Lerp(yRotation, direction.GetComponent<MarchingBehvaiour>().yRotation, 0.4f);
         if ((transform.position - direction.position).magnitude > marchingDistance * 3.3f)
         {
             GetComponent<State>().Panic(0.5f);
             enabled = false;
         }
 
-        if (rb.velocity.magnitude < 0.08f)
-        {
-            pac.panicStrength += 0.06f;
+        if (itsBeenAWhile==true) { 
+            if (rb.velocity.magnitude < 0.08f)
+            {
+                pac.panicStrength += 0.06f;
+            }
         }
 
-        if(pac.panicStrength>0.4f)
+        if (pac.panicStrength>0.4f)
         {
             GetComponent<State>().Panic(0.2f);
             enabled = false;
