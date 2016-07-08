@@ -53,10 +53,10 @@ public class BombAtClickBackup : MonoBehaviour {
                     a.enabled = false;
                     f.enabled = false;
                     g.layer = 10;
-
+                    /*
                     EffectsManager.instance.SpawnBlood(g.transform);
                     EffectsManager.instance.SpawnBloodSplat(g.transform);
-
+                    */
                     i++;
                 }
                 //Instantiate(theInstance, hitInfo.point, Quaternion.identity);
