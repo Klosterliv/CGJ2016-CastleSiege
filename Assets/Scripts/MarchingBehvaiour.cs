@@ -32,7 +32,7 @@ public class MarchingBehvaiour : MonoBehaviour {
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
-        if(masterPoint.parent.GetComponent<State>().currentState != State.aiState.marching)
+        if(masterPoint.parent.GetComponent<State>().currentState == State.aiState.marching)
         {
             rb.AddForce((masterPoint.position - transform.position) * 2.7f);
         } else

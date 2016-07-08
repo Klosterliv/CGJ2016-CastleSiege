@@ -18,6 +18,8 @@ public class State : MonoBehaviour
     public bool alive;
     public enum aiState { marching, panicking, dead, attacking };
     public aiState currentState;
+	[SerializeField]
+	LayerMask structure;
     //public bool panicking = false;
 
     // Use this for initialization
@@ -30,6 +32,18 @@ public class State : MonoBehaviour
         turnTowardsCastle = GetComponent<TurnTowardsCastle>();
         pac = GetComponent<PanicAgentController>();
     }
+
+	void FixedUpdate(){
+		if(currentState==aiState.attacking){
+			if(Physics.CheckSphere(transform.position,1.0f, structure, QueryTriggerInteraction.Collide)){
+				if(Random.value>0.94f){
+					forwardMovement.enabled = true;
+				}
+			} else {
+				Panic(0.0f);
+			}
+		}
+	}
 
     public void marching()
     {
@@ -81,7 +95,7 @@ public class State : MonoBehaviour
         }
     }
     
-    public void attack( Structure attackMe )
+    public void attack(  )
     {
         if (alive)
         {

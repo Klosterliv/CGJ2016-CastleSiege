@@ -21,7 +21,7 @@ public class TurnTowardsCastle : MonoBehaviour {
         {
             loopCounter = 0;
 
-            strength = (0.5f-pac.panicStrength)*35.0f;
+            strength = (0.8f-pac.panicStrength)*35.0f;
 
             if (strength > 0.0f)
             {

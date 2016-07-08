@@ -22,6 +22,8 @@ public class EffectsManager : MonoBehaviour
     GameObject cannonMuzzleFlash;
     [SerializeField]
     GameObject cannonMuzzleSmoke;
+	[SerializeField]
+	GameObject sparksEffect;
 
 
     [SerializeField]
@@ -118,5 +120,10 @@ public class EffectsManager : MonoBehaviour
         smoke.GetComponent<DestroyAfterPlay>().enabled = true;
 
     }
+
+	public void SpawnSparks (Vector3 point) {
+		GameObject newSparks;
+		newSparks = (GameObject) Instantiate(sparksEffect, point, Quaternion.identity);
+	}
 
 }

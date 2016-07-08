@@ -42,6 +42,7 @@ public class AgentAnimations : MonoBehaviour {
 			AimOrShoulder();
 
 			shootTimer-=Time.deltaTime;
+			shootTimer = Mathf.Max(0,shootTimer);
 		}
 
 	
@@ -99,17 +100,33 @@ public class AgentAnimations : MonoBehaviour {
 				// FIRE WEAPON //
 				Vector3 fireVector = hit.point-rifleMuzzle.position;
 				Gunfire (fireVector);
-				Debug.LogError("FIRE AT "+ hit.collider.gameObject.name);
+				EffectsManager.instance.SpawnSparks(hit.point);
+
+				Structure structure = hit.transform.parent.GetComponent<Structure>();
+				if (structure != null) {
+					structure.Damage(1f);
+				}
+
 				shootTimer += 5f;
 			}
-			else if (Random.Range(0f, 1f) > 0.7f) {
+			else if (Random.Range(0f, 1f) > 0.97f) {
 				// FIRE WEAPON //
 				Vector3 fireVector = hit.point-rifleMuzzle.position;
 				Gunfire (fireVector);
-				Debug.LogError("FIRERNG");
 				shootTimer += 5f;
+
+				hit.transform.GetComponent<State>().kill();
+				hit.transform.GetComponent<Rigidbody>().AddForceAtPosition(fireDir*5, hit.point);
+
 			}
 			else shootTimer += 2f;
+		}
+		else if (Random.Range(0f, 1f) > 0.8f) {
+			// FIRE WEAPON //
+			Vector3 fireVector = fireDir;
+			Gunfire (fireVector);
+
+			shootTimer += 2f;			
 		}
 		
 	}
