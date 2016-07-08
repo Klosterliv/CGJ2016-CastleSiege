@@ -1,0 +1,171 @@
+    <theme mode="objective" volume="0" channels="2" time_signature="4/4" bars="16" tempo="90" sample_rate="44100">
+        <action_preset name="Complete">
+            <silence urgency="100" rendezvous="no" stinger="5"/>
+        </action_preset>
+        <action_preset name="Few Soldiers">
+            <set_level urgency="100" minimum="8" maximum="8"/>
+        </action_preset>
+        <action_preset name="From Level 1 To Many Soldiers">
+            <set_level urgency="100" minimum="2" maximum="2" stinger="6"/>
+        </action_preset>
+        <action_preset name="Last Soldier">
+            <set_level urgency="100" minimum="10" maximum="10"/>
+        </action_preset>
+        <action_preset name="Many Soldiers">
+            <set_level urgency="100" minimum="2" maximum="2"/>
+        </action_preset>
+        <action_preset name="Medium Soldiers">
+            <set_level urgency="100" minimum="5" maximum="5"/>
+        </action_preset>
+        <defaults>
+            <fade_out minimum="500" maximum="10000"/>
+            <crossfade minimum="50" maximum="250"/>
+            <fade_in minimum="50" maximum="1000"/>
+            <reverb size="0" mix="0" damping="0"/>
+            <agility strict="no" value="4"/>
+            <pickup beats="0"/>
+            <progression mode="random"/>
+        </defaults>
+        <rendezvous>
+            <agility value="4"/>
+            <fade value="75"/>
+        </rendezvous>
+        <audio_loop_track volume="300" name="Percussion" id="1">
+            <crossfade minimum="500" maximum="1000"/>
+            <agility value="1"/>
+            <key name="G" value="0">
+                <trigger length="3998400" filename="audio/1_0_1.ogg" value="1"/>
+                <trigger length="3998400" filename="audio/1_0_5.ogg" value="5"/>
+                <trigger length="3998400" filename="audio/1_0_8.ogg" value="8"/>
+            </key>
+        </audio_loop_track>
+        <audio_loop_track volume="0" name="Winds" id="2">
+            <agility value="2"/>
+            <key name="G" value="0">
+                <trigger length="3998400" filename="audio/2_0_2.ogg" value="2"/>
+                <trigger length="3998400" filename="audio/2_0_2.ogg" value="3"/>
+                <trigger length="3998400" filename="audio/2_0_4.ogg" value="4"/>
+                <trigger length="3998400" filename="audio/2_0_4.ogg" value="6"/>
+                <trigger length="3998400" filename="audio/2_0_7.ogg" value="7"/>
+                <trigger length="3998400" filename="audio/2_0_7.ogg" value="9"/>
+                <trigger dummy="yes" length="0" filename="Silent" value="10"/>
+            </key>
+        </audio_loop_track>
+        <audio_loop_track volume="0" name="Strings" id="3">
+            <key name="G" value="0">
+                <trigger length="3998400" filename="audio/3_0_2.ogg" value="2"/>
+                <trigger length="3998400" filename="audio/3_0_3.ogg" value="3"/>
+                <trigger length="3998400" filename="audio/3_0_3.ogg" value="5"/>
+                <trigger length="3998400" filename="audio/3_0_6.ogg" value="6"/>
+                <trigger length="3998400" filename="audio/3_0_6.ogg" value="8"/>
+                <trigger dummy="yes" length="0" filename="Silent" value="9"/>
+            </key>
+        </audio_loop_track>
+        <audio_stinger_track volume="200" name="Stinger Hit" id="4">
+            <agility value="1"/>
+            <progression mode="sequential"/>
+            <key name="G" value="0">
+                <stinger length="411600" filename="audio/4_0_1.ogg" value="1">
+                    <agility_points strict="no">
+                        <beat point="1"/>
+                        <beat point="2"/>
+                        <beat point="3"/>
+                        <beat point="4"/>
+                        <beat point="5"/>
+                        <beat point="6"/>
+                        <beat point="7"/>
+                        <beat point="8"/>
+                    </agility_points>
+                </stinger>
+                <stinger length="411600" filename="audio/4_0_2.ogg" value="2">
+                    <agility_points strict="no">
+                        <beat point="9"/>
+                        <beat point="10"/>
+                        <beat point="11"/>
+                        <beat point="12"/>
+                        <beat point="13"/>
+                        <beat point="14"/>
+                    </agility_points>
+                </stinger>
+                <stinger length="411600" filename="audio/4_0_3.ogg" value="3">
+                    <agility_points strict="no">
+                        <beat point="17"/>
+                        <beat point="18"/>
+                        <beat point="19"/>
+                        <beat point="20"/>
+                        <beat point="21"/>
+                        <beat point="22"/>
+                        <beat point="23"/>
+                        <beat point="24"/>
+                    </agility_points>
+                </stinger>
+                <stinger length="411600" filename="audio/4_0_4.ogg" value="4">
+                    <agility_points strict="no">
+                        <beat point="25"/>
+                        <beat point="26"/>
+                        <beat point="27"/>
+                        <beat point="28"/>
+                        <beat point="29"/>
+                        <beat point="30"/>
+                    </agility_points>
+                </stinger>
+                <stinger length="411600" filename="audio/4_0_5.ogg" value="5">
+                    <agility_points strict="no">
+                        <beat point="33"/>
+                        <beat point="34"/>
+                        <beat point="35"/>
+                        <beat point="36"/>
+                        <beat point="37"/>
+                        <beat point="38"/>
+                        <beat point="39"/>
+                        <beat point="40"/>
+                        <beat point="61"/>
+                        <beat point="62"/>
+                    </agility_points>
+                </stinger>
+                <stinger length="411600" filename="audio/4_0_6.ogg" value="6">
+                    <agility_points strict="no">
+                        <beat point="41"/>
+                        <beat point="42"/>
+                        <beat point="43"/>
+                        <beat point="44"/>
+                        <beat point="45"/>
+                        <beat point="46"/>
+                    </agility_points>
+                </stinger>
+                <stinger length="411600" filename="audio/4_0_7.ogg" value="7">
+                    <agility_points strict="no">
+                        <beat point="49"/>
+                        <beat point="50"/>
+                        <beat point="51"/>
+                        <beat point="52"/>
+                        <beat point="53"/>
+                        <beat point="54"/>
+                        <beat point="55"/>
+                        <beat point="56"/>
+                    </agility_points>
+                </stinger>
+                <stinger length="411600" filename="audio/4_0_8.ogg" value="8">
+                    <agility_points strict="no">
+                        <beat point="57"/>
+                        <beat point="58"/>
+                        <beat point="59"/>
+                        <beat point="60"/>
+                    </agility_points>
+                </stinger>
+            </key>
+        </audio_stinger_track>
+        <audio_stinger_track volume="0" name="Complete" id="5">
+            <agility value="1"/>
+            <key name="G" value="0">
+                <stinger length="470400" filename="audio/5_0_1.ogg" value="1"/>
+            </key>
+        </audio_stinger_track>
+        <audio_stinger_track volume="0" name="Go To Many Soldiers" id="6">
+            <agility value="4"/>
+            <pickup beats="2"/>
+            <key name="C" value="0">
+                <stinger length="294000" filename="audio/6_0_1.ogg" value="1"/>
+            </key>
+        </audio_stinger_track>
+    </theme>
