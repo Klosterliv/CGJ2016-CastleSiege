@@ -4,6 +4,13 @@ using System.Collections;
 public class AgentAnimations : MonoBehaviour {
 
 	[SerializeField]
+	Transform riflePivot;
+	[SerializeField]
+	Transform rifleMuzzle;
+	[SerializeField]
+	LayerMask shootTargetMask;
+
+	[SerializeField]
 	AnimationCurve hopAnimation;
 	[SerializeField]
 	PanicAgentController panicAgentController;
@@ -18,6 +25,7 @@ public class AgentAnimations : MonoBehaviour {
 
 	Rigidbody rbody;
 	float velocity;
+	float shootTimer = 2f;
 
 	// Use this for initialization
 	void Start () {
@@ -28,8 +36,14 @@ public class AgentAnimations : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (state.alive)
-		Hopping ();
+		if (state.alive) {
+
+			Hopping ();
+			AimOrShoulder();
+
+			shootTimer-=Time.deltaTime;
+		}
+
 	
 	}
 
@@ -59,6 +73,53 @@ public class AgentAnimations : MonoBehaviour {
 
 
     }
+
+	void AimOrShoulder() {
+		if (state.currentState == State.aiState.attacking) {
+
+			riflePivot.localRotation = Quaternion.Lerp(riflePivot.localRotation, Quaternion.Euler(112, 0, -10), Time.deltaTime*10);
+
+			if(shootTimer <= 0)
+				Fire();
+						
+		}
+		else {
+			riflePivot.localRotation = Quaternion.Lerp(riflePivot.localRotation, Quaternion.Euler(0, 0, 0), Time.deltaTime*10);		
+		}
+	}
+	void Fire() {
+		Vector3 randAim = Random.onUnitSphere*16f;
+		Vector3 fireDir = (rifleMuzzle.position-riflePivot.position).normalized*60+randAim;
+		Debug.DrawRay(rifleMuzzle.position, fireDir, Color.red, 0.5f);
+		RaycastHit hit;
+
+		if (Physics.Raycast(rifleMuzzle.position, fireDir, out hit, fireDir.magnitude, shootTargetMask, QueryTriggerInteraction.Ignore)) {
+			Debug.Log("hit");
+			if (hit.collider.tag != "Agent") {
+				// FIRE WEAPON //
+				Vector3 fireVector = hit.point-rifleMuzzle.position;
+				Gunfire (fireVector);
+				Debug.LogError("FIRE AT "+ hit.collider.gameObject.name);
+				shootTimer += 5f;
+			}
+			else if (Random.Range(0f, 1f) > 0.7f) {
+				// FIRE WEAPON //
+				Vector3 fireVector = hit.point-rifleMuzzle.position;
+				Gunfire (fireVector);
+				Debug.LogError("FIRERNG");
+				shootTimer += 5f;
+			}
+			else shootTimer += 2f;
+		}
+		
+	}
+	void Gunfire (Vector3 fireVector) {
+		
+		EffectsManager.instance.SpawnMuzzleFlash(rifleMuzzle);
+		EffectsManager.instance.SpawnBulletTrace(rifleMuzzle.position, fireVector);
+
+	}
+
 
 	void FixedUpdate () {
 		velocity = rbody.velocity.magnitude;
