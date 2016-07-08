@@ -100,14 +100,19 @@ public class AgentAnimations : MonoBehaviour {
 				// FIRE WEAPON //
 				Vector3 fireVector = hit.point-rifleMuzzle.position;
 				Gunfire (fireVector);
-				Debug.LogError("FIRE AT "+ hit.collider.gameObject.name);
+				EffectsManager.instance.SpawnSparks(hit.point);
+
+				Structure structure = hit.transform.parent.GetComponent<Structure>();
+				if (structure != null) {
+					structure.Damage(1f);
+				}
+
 				shootTimer += 5f;
 			}
 			else if (Random.Range(0f, 1f) > 0.97f) {
 				// FIRE WEAPON //
 				Vector3 fireVector = hit.point-rifleMuzzle.position;
 				Gunfire (fireVector);
-				Debug.LogError("FIRERNG");
 				shootTimer += 5f;
 
 				hit.transform.GetComponent<State>().kill();
@@ -120,7 +125,7 @@ public class AgentAnimations : MonoBehaviour {
 			// FIRE WEAPON //
 			Vector3 fireVector = fireDir;
 			Gunfire (fireVector);
-			Debug.LogError("FIRE IN AIR");
+
 			shootTimer += 2f;			
 		}
 		
