@@ -59,6 +59,11 @@ public class Structure : MonoBehaviour {
 
 	public void Damage (float damage) {
 
+		if (damage > life) {
+			GameManager.instance.buildingDmg+=life;
+		}
+		else GameManager.instance.buildingDmg+=damage;
+
 		life -= damage;
 		DamageOffset();
 
