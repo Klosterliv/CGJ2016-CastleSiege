@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Trajectory : MonoBehaviour
 {
-    public int trajSteps = 50;
+    public int trajSteps = 80;
     LineRenderer line;
 
     private Vector3 distanceAwayFromZeroOnYVector;
@@ -81,11 +81,16 @@ public class Trajectory : MonoBehaviour
                     foundGround = true;
                 }
                 bulletPosition += bulletForce;
+            } else
+            {
+                bulletForce += new Vector3(0, -0.4f, 0);
+                bulletPosition += bulletForce;
             }
         }
         for (float i = 0f; i < vertexCount; i++)
         {
-            Vector3 thePosition = Vector3.Lerp(points[(int)i], target, i / (foundSteps * 1.0f));
+            Vector3 thePosition = Vector3.Lerp(points[(int)i], target+(Vector3.down*4.2f), i / (foundSteps * 1.0f));
+            //Vector3 thePosition = points[(int)i];
             line.SetPosition((int)i, thePosition);
             thePositions[(int)i] = thePosition;
         }

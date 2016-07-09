@@ -20,10 +20,12 @@ public class Fire : MonoBehaviour
     private Cooldown cooldown;
     private Ammo ammo;
 
+    bool canFire;
+
     // Use this for initialization
     void Start()
     {
-
+        canFire = true;
         cooldown = GameObject.Find("Ammo").GetComponent<Cooldown>();
         ammo = GameObject.Find("Ammo").GetComponent<Ammo>();
         followShell = GameObject.Find("ShellMonitor").GetComponent<FollowShell>();
@@ -32,7 +34,7 @@ public class Fire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && cooldown.isReady() && !followShell.isShellVIew())
+        if (Input.GetMouseButtonDown(0) && cooldown.isReady() && !followShell.isShellVIew() && canFire)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out hitInfo, landscapeLayer);
@@ -41,9 +43,15 @@ public class Fire : MonoBehaviour
             followShell.ShowShellMonitor();
             ammo.decreaseAmmo();
             // cooldown.Restart();
+            canFire = false;
+            Invoke("timeToShoot", 1.0f);
         }
 
 
+    }
+    void timeToShoot()
+    {
+        canFire = true;
     }
 
     public float angle = 45;
