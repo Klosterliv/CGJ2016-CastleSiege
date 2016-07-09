@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
@@ -120,4 +121,8 @@ public class Menu : MonoBehaviour
     {
         GetComponent<AudioSource>().Play();
     }
+
+	public void LoadLevel(int id) {
+		SceneManager.LoadScene(1);
+	}
 }
