@@ -3,12 +3,16 @@ using System.Collections;
 
 public class Trajectory : MonoBehaviour
 {
-
+    public int trajSteps = 50;
     LineRenderer line;
 
     private Vector3 distanceAwayFromZeroOnYVector;
     private float distanceAwayFromZeroOnY;
     private Vector3[] points;
+    [SerializeField]
+    public LayerMask groundLayer;
+
+    public Vector3[] thePositions;
 
     void Awake()
     {
@@ -18,7 +22,8 @@ public class Trajectory : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        points = new Vector3[20];
+        points = new Vector3[trajSteps];
+        thePositions = new Vector3[trajSteps];
         distanceAwayFromZeroOnYVector = new Vector3(0, transform.position.y, 0) - Vector3.zero;
         //print(distanceAwayFromZeroOnYVector.y);
         distanceAwayFromZeroOnY = distanceAwayFromZeroOnYVector.y;
@@ -36,6 +41,57 @@ public class Trajectory : MonoBehaviour
         line.enabled = true;
     }
 
+    public void DrawTrajectory(Vector3 target)
+    {
+        var vertexCount = trajSteps;
+
+        line.SetVertexCount(vertexCount);
+
+        float v_i = Fire.calculateForce(Vector3.Distance(target, transform.position));
+        
+
+        var currentPosition = transform.position;
+        var straightLineStep = (target - currentPosition) / vertexCount;
+
+        Vector3 bulletForce, bulletPosition;
+
+        bulletForce = -transform.up*0.18f*v_i;
+        bulletPosition = transform.position;
+
+        bool foundGround = false;
+        int foundSteps = 0;
+        for (var i = 0; i < vertexCount; i++)
+        {
+            points[i] = bulletPosition;
+            line.SetPosition(i, bulletPosition);
+            
+            if (foundGround == false)
+            {
+                Ray theRay = new Ray();
+                theRay.origin = bulletPosition;
+                theRay.direction = bulletForce;
+                
+                bulletForce += new Vector3(0, -0.4f, 0);
+                
+                
+                RaycastHit hitInfo = new RaycastHit();
+                if(Physics.Raycast(theRay, bulletForce.magnitude, groundLayer))
+                {
+                    foundSteps = i;
+                    foundGround = true;
+                }
+                bulletPosition += bulletForce;
+            }
+        }
+        for (float i = 0f; i < vertexCount; i++)
+        {
+            Vector3 thePosition = Vector3.Lerp(points[(int)i], target, i / (foundSteps * 1.0f));
+            line.SetPosition((int)i, thePosition);
+            thePositions[(int)i] = thePosition;
+        }
+    }
+
+    /*
     public void DrawTrajectory(Vector3 target)
     {
         var g = 16f;
@@ -78,12 +134,14 @@ public class Trajectory : MonoBehaviour
         }
 
     }
+    */
 
     public void Hide()
     {
         line.enabled = false;
     }
 
+    
     public Vector3 GetPoint(int index)
     {
         return points[index];
