@@ -13,8 +13,9 @@ public class BuildArmy : MonoBehaviour
     }
     
     public float formationSpacing = 3;
-    public bool keepCreating;
-    public float createDelayTime;
+    public int waves;
+    public float waveDelay;
+    //public float createDelayTime;
 
     private Vector3 armyBasePoint;
     private Color32 white;
@@ -62,7 +63,11 @@ public class BuildArmy : MonoBehaviour
     IEnumerator placeTroops(int width, int height, float waitTime, Vector3 waypoint)
     {
         yield return new WaitForSeconds(waitTime);
-        Reload(width, height, waypoint);
+        for(int i = 0; i<waves; i++)
+        {
+            Reload(width, height, waypoint);
+            yield return new WaitForSeconds(waveDelay);
+        }
     }
     
 
@@ -120,7 +125,7 @@ public class BuildArmy : MonoBehaviour
         {
             for(int y = 0; y<height; y++)
             {
-                soldiers[(width * y) + x] = (GameObject)Instantiate(m_fencePrefab, new Vector3(x, 0, y) * formationSpacing, Quaternion.identity);
+                soldiers[(width * y) + x] = (GameObject)Instantiate(m_fencePrefab, new Vector3(x-width*0.5f, 0, y-height*0.5f) * formationSpacing, Quaternion.identity);
                 soldiers[(width * y) + x].transform.parent = soldierParent.transform;
                 soldiers[(width * y) + x].GetComponent<MarchingBehvaiour>().marchingDistance = m_cellSize;
                 soldiers[(width * y) + x].GetComponent<TurnTowardsCastle>().castlePoint = waypoint;

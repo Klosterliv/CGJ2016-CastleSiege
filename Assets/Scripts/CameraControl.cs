@@ -43,7 +43,7 @@ public class CameraControl : MonoBehaviour
     void MoveCamera()
     {
 
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         move *= camSpeed;
 
         targetPos = transform.position + move;
@@ -59,6 +59,6 @@ public class CameraControl : MonoBehaviour
             targetPos.y = hit.point.y + minHeight;
         }
 
-        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * camLerpSpeed);
+        transform.position = Vector3.Lerp(transform.position, targetPos, Time.unscaledDeltaTime * camLerpSpeed);
     }
 }

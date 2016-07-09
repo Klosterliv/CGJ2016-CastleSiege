@@ -13,7 +13,7 @@ public class Attraction : MonoBehaviour {
     public int skipValue;
     RaycastHit hitInfo;
     [SerializeField]
-    LayerMask agentsLayer, deadLayer, attackObjects;
+    LayerMask agentsLayer, deadLayer, attackObjects, avoidLayer;
 
     float distance;
     PanicAgentController pac;
@@ -44,7 +44,7 @@ public class Attraction : MonoBehaviour {
             //Debug.DrawRay(lookRay.origin, lookRay.direction*findNeighbourDistance);
             if (Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance, agentsLayer)) // finding something
             {
-                if(hitInfo.transform.GetComponent<State>().currentState == State.aiState.attacking)
+                if (hitInfo.transform.GetComponent<State>().currentState == State.aiState.attacking)
                 {
                     //transform.rotation = Quaternion.LookRotation(-transform.right);
                     //Debug.Log("this is happening!");
@@ -53,7 +53,7 @@ public class Attraction : MonoBehaviour {
                 {
                     transform.rotation = Quaternion.Lerp(transform.rotation, hitInfo.transform.rotation, mimicRotationStrength * Time.fixedDeltaTime * skipValue);
                 }
-                
+
 
                 distance = (transform.position - hitInfo.transform.position).magnitude;
                 if (distance > mimicMaxDistance) // if the neighbour is far away
@@ -66,13 +66,20 @@ public class Attraction : MonoBehaviour {
                 }
 
                 hitPac = hitInfo.transform.GetComponent<PanicAgentController>();
-                pac.panicStrength = Mathf.Lerp(pac.panicStrength, hitPac.panicStrength*1.2f, 0.7f);
+                pac.panicStrength = Mathf.Lerp(pac.panicStrength, hitPac.panicStrength * 1.2f, 0.7f);
 
-            } else if(Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance, deadLayer, QueryTriggerInteraction.Collide)) // finding dead people
+            } else if (Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance, deadLayer, QueryTriggerInteraction.Collide)) // finding dead people
             {
                 newQuat = Quaternion.LookRotation(transform.position - hitInfo.transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, newQuat, 0.3f);
                 pac.panicStrength += 0.4f;
+            } else if (Physics.Raycast(lookRay, out hitInfo, findNeighbourDistance, avoidLayer)) // avoiding stuff (like edges)
+            {
+                if(GetComponent<State>().currentState == State.aiState.panicking)
+                {
+                    rb.AddForce(hitInfo.normal * 120f * pac.panicStrength);
+                    pac.panicStrength = 0.0f;
+                }
             }
         }
 	}

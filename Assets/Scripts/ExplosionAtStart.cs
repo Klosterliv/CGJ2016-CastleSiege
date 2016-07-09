@@ -56,7 +56,11 @@ public class ExplosionAtStart : MonoBehaviour {
         hitColliders = Physics.OverlapSphere(transform.position, explosionRadius*0.3f, (agentsLayer + deadLayer));
         if (shouldKill)
         {
-            Time.timeScale = Mathf.Min(Time.timeScale, 1.0f / hitColliders.Length * 2.0f);
+            if (hitColliders.Length != 0)
+            {
+                GameObject.Find("TimeManager").GetComponent<timeManager>().timeAim = 0f;
+            }
+            //Time.timeScale = Mathf.Min(Time.timeScale, 1.0f / hitColliders.Length * 2.0f);
         }
         i = 0;
         while (i < hitColliders.Length)
