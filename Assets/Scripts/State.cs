@@ -58,6 +58,8 @@ public class State : MonoBehaviour
 
     public void kill()
     {
+		if (currentState != aiState.dead) GameManager.instance.AddDead();
+
         currentState = aiState.dead;
         alive = false;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;

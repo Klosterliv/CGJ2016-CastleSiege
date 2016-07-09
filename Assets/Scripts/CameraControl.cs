@@ -19,6 +19,8 @@ public class CameraControl : MonoBehaviour
 
     Vector3 targetPos;
 
+	float height;
+
     void Awake()
     {
         transform.FindChild("ShellMonitor").gameObject.SetActive(true);
@@ -29,6 +31,7 @@ public class CameraControl : MonoBehaviour
     {
 
         targetPos = transform.position;
+		height = minHeight+((maxHeight-minHeight)/2);
     }
 
     // Update is called once per frame
