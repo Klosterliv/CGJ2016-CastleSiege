@@ -55,7 +55,7 @@ public class Trajectory : MonoBehaviour
 
         Vector3 bulletForce, bulletPosition;
 
-        bulletForce = -transform.up*0.18f*v_i;
+        bulletForce = (-transform.up-transform.forward*0.3f)*0.21f*v_i;
         bulletPosition = transform.position;
 
         bool foundGround = false;
