@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public int deaths = 0;
     public float buildingDmg = 0;
+	public int buildingsDestroyed = 0;
 
 
 

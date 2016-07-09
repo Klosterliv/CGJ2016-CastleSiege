@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
@@ -21,6 +22,12 @@ public class Menu : MonoBehaviour
     private int cooldown = 3;
 
     private bool fireFirst = false;
+
+	[SerializeField]
+	Light sun;
+	[SerializeField]
+	AnimationCurve ambientBrighten;
+	float t = 0;
 
     // Use this for initialization
     void Start()
@@ -44,6 +51,12 @@ public class Menu : MonoBehaviour
 
     void Update()
     {
+		t += Time.deltaTime;
+		RenderSettings.ambientIntensity = ambientBrighten.Evaluate(t);
+		sun.intensity = ambientBrighten.Evaluate(t)/2;
+
+
+
         if (Vector3.Distance(cam.transform.position, gun.transform.position) <= 5f)
         {
 
@@ -84,8 +97,9 @@ public class Menu : MonoBehaviour
 
     public void Step2()
     {
-        GetComponent<AudioSource>().PlayOneShot(audio[2]);
-        cylinder.GetComponent<Fire>().FireProjectile(GameObject.Find("GunTarget").transform.position);
+        //GetComponent<AudioSource>().PlayOneShot(audio[2]);
+        //cylinder.GetComponent<Fire>().FireProjectile(GameObject.Find("GunTarget").transform.position);
+		EffectsManager.instance.SpawnCannonFlash(cylinder.transform.position, cylinder.transform.forward);
     }
 
     public void Decrease()
@@ -107,4 +121,8 @@ public class Menu : MonoBehaviour
     {
         GetComponent<AudioSource>().Play();
     }
+
+	public void LoadLevel(int id) {
+		SceneManager.LoadScene(1);
+	}
 }
