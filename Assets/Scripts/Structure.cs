@@ -42,14 +42,16 @@ public class Structure : MonoBehaviour {
 			Destroy(offsetObject.gameObject);
 			Destroy(GetComponent<Collider>());
 			dying = true;
+			GameManager.instance.buildingsDestroyed++;
         }
 	}
 
 	void Update () {
 		if (dying) {
 			deathcounter-=Time.deltaTime;
-			if (deathcounter <= 0)
+			if (deathcounter <= 0) {
 				Destroy(gameObject);
+			}
 		}
 		else {
 			offsetObject.position = Vector3.Lerp (offsetObject.position, targetPos, Time.deltaTime*offsetLerpSpeed);

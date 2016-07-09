@@ -22,6 +22,12 @@ public class Menu : MonoBehaviour
 
     private bool fireFirst = false;
 
+	[SerializeField]
+	Light sun;
+	[SerializeField]
+	AnimationCurve ambientBrighten;
+	float t = 0;
+
     // Use this for initialization
     void Start()
     {
@@ -44,6 +50,12 @@ public class Menu : MonoBehaviour
 
     void Update()
     {
+		t += Time.deltaTime;
+		RenderSettings.ambientIntensity = ambientBrighten.Evaluate(t);
+		sun.intensity = ambientBrighten.Evaluate(t)/2;
+
+
+
         if (Vector3.Distance(cam.transform.position, gun.transform.position) <= 5f)
         {
 

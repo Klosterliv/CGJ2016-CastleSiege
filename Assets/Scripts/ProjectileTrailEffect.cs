@@ -33,8 +33,8 @@ public class ProjectileTrailEffect : MonoBehaviour {
 		}			
 		else {
 			Rigidbody rigid = (Rigidbody) GetComponent(typeof(Rigidbody));
-			//rigid.useGravity = true;
-			//rigid.velocity = projectileV;
+			rigid.useGravity = true;
+			rigid.velocity = projectileV;
 			dying = true;
 		}
 	}
