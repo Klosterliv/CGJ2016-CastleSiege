@@ -10,6 +10,11 @@ public class ExplosionAtStart : MonoBehaviour {
     private Vector3 flatten = new Vector3(1.0f,0.0f,1.0f);
     // Use this for initialization
 
+	[SerializeField]
+	Transform screamsSFX;
+	[SerializeField]
+	Transform splosionsSFX;
+
 
 
     void Start() {
@@ -35,6 +40,10 @@ public class ExplosionAtStart : MonoBehaviour {
 
         hitColliders = Physics.OverlapSphere(transform.position, explosionRadius, (agentsLayer + deadLayer));
 
+		// SOUND //
+		if (shouldKill&&hitColliders.Length>0){
+			screamsSFX.gameObject.SetActive(true);
+		}
         //Time.timeScale = 
 
         i = 0;
