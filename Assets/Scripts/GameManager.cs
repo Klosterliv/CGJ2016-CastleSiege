@@ -1,44 +1,65 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
-	public static GameManager instance;
+    public GameObject endgameState;
 
-	public int totalEnemyCount = 1000;
+    public static GameManager instance;
 
-	public int deaths = 0;
-	public float buildingDmg = 0;
+    public int totalEnemyCount = 1000;
 
-	void Awake() {
-		if (instance == null)
-		{
-			instance = this as GameManager;
-			DontDestroyOnLoad(gameObject);
-		}
-		else
-			Destroy(gameObject);
-	}
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-	public void AddDead() {
-		deaths++;
-		int deadPortion = (10*deaths/totalEnemyCount) +2;
+    public int deaths = 0;
+    public float buildingDmg = 0;
 
 
-		if (deadPortion > 0 && deadPortion < 10)
-		MusicManager.instance.SetEliasLevel(deadPortion, 4, false);
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this as GameManager;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        if (deaths > 10)
+        {
+            endgameState.GetComponent<EndGameState>().Success(deaths, buildingDmg);
+        }
 
 
-	}
+        if (buildingDmg > 150)
+        {
+            endgameState.GetComponent<EndGameState>().Failure(deaths, buildingDmg);
+        }
+
+    }
+
+    public void AddDead()
+    {
+        deaths++;
+        int deadPortion = (10 * deaths / totalEnemyCount) + 2;
+
+
+        if (deadPortion > 0 && deadPortion < 10)
+            MusicManager.instance.SetEliasLevel(deadPortion, 4, false);
+
+
+    }
+
 
 }

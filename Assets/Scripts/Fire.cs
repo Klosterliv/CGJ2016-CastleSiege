@@ -55,6 +55,10 @@ public class Fire : MonoBehaviour
         var distance = Vector3.Distance(target, transform.position);
         var aim = (new Vector3(target.x, 0, target.z) - transform.position).normalized;
         var proj = (GameObject)Instantiate(projectilePrefab, transform.position, new Quaternion());
+        
+        System.Array.Copy(GetComponent<Trajectory>().thePositions, proj.GetComponent<MovingWithLine>().thePositions, GetComponent<Trajectory>().trajSteps);
+        proj.GetComponent<MovingWithLine>().enabled = true;
+
         proj.GetComponent<ReplaceAtImpact>().RegisterImpactPoint(target);
 
         shellCam = (GameObject)Instantiate(shellCameraPrefab, transform.position, new Quaternion());
@@ -63,7 +67,7 @@ public class Fire : MonoBehaviour
 
         Debug.DrawRay(transform.position, -transform.up * 10, Color.red);
 
-        proj.GetComponent<Rigidbody>().AddForce(-transform.up * calculateForce(distance), ForceMode.Impulse);
+        //proj.GetComponent<Rigidbody>().AddForce(-transform.up * calculateForce(distance), ForceMode.Impulse);
 
         EffectsManager.instance.SpawnCannonFlash(transform.position, target);
         EffectsManager.instance.SpawnTrailEffect(proj.transform);

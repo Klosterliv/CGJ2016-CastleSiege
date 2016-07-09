@@ -76,7 +76,7 @@ public class Aiming : MonoBehaviour
 
         transform.LookAt(dir);
         //print(trajectory.GetPoint(3));
-        var p = trajectory.GetPoint(4);
+        //var p = trajectory.GetPoint(4);
         //  var p = trajectory.GetAverage(5);
 
 		RotateWheels ();
