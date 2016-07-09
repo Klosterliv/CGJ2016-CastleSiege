@@ -96,8 +96,9 @@ public class Menu : MonoBehaviour
 
     public void Step2()
     {
-        GetComponent<AudioSource>().PlayOneShot(audio[2]);
-        cylinder.GetComponent<Fire>().FireProjectile(GameObject.Find("GunTarget").transform.position);
+        //GetComponent<AudioSource>().PlayOneShot(audio[2]);
+        //cylinder.GetComponent<Fire>().FireProjectile(GameObject.Find("GunTarget").transform.position);
+		EffectsManager.instance.SpawnCannonFlash(cylinder.transform.position, cylinder.transform.forward);
     }
 
     public void Decrease()
