@@ -12,6 +12,8 @@ public class CameraControl : MonoBehaviour
     float maxHeight = 2;
     [SerializeField]
     float minHeight = 1;
+	[SerializeField]
+	float startHeight = 1;
     [SerializeField]
     float camLerpSpeed = 1;
     [SerializeField]
@@ -31,13 +33,15 @@ public class CameraControl : MonoBehaviour
     {
 
         targetPos = transform.position;
-		height = minHeight+((maxHeight-minHeight)/2);
+		//height = minHeight+((maxHeight-minHeight)/2);
+		height = startHeight;
     }
 
     // Update is called once per frame
     void Update()
     {
 
+		Zoom ();
         MoveCamera();
 
     }
@@ -59,9 +63,16 @@ public class CameraControl : MonoBehaviour
         {
             //Debug.Log(hit.distance);
             //if (hit.distance <= minHeight)
-            targetPos.y = hit.point.y + minHeight;
+            targetPos.y = hit.point.y + height;
         }
 
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.unscaledDeltaTime * camLerpSpeed);
     }
+
+	void Zoom () {
+
+		float newHeight = height + -Input.GetAxis("Mouse ScrollWheel")*zoomSpeed;
+		height = Mathf.Clamp(newHeight, minHeight, maxHeight);
+		
+	}
 }

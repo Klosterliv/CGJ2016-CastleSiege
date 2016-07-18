@@ -38,7 +38,7 @@ public class Structure : MonoBehaviour {
 	void FixedUpdate () {
         if (!dying && life <= 0.0f)
         {
-			Debug.LogError ("DESTROYED");
+			//Debug.LogError ("DESTROYED");
 			Destroy(offsetObject.gameObject);
 			Destroy(GetComponent<Collider>());
 			dying = true;

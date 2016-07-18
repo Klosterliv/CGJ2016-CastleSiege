@@ -97,9 +97,9 @@ public class Menu : MonoBehaviour
 
     public void Step2()
     {
-        //GetComponent<AudioSource>().PlayOneShot(audio[2]);
+        GetComponent<AudioSource>().PlayOneShot(audio[2]);
         //cylinder.GetComponent<Fire>().FireProjectile(GameObject.Find("GunTarget").transform.position);
-		EffectsManager.instance.SpawnCannonFlash(cylinder.transform.position, cylinder.transform.forward);
+		EffectsManager.instance.SpawnCannonFlash(cylinder.transform.position, cylinder.transform.forward, cylinder.transform);
     }
 
     public void Decrease()
@@ -123,6 +123,9 @@ public class Menu : MonoBehaviour
     }
 
 	public void LoadLevel(int id) {
-		SceneManager.LoadScene(1);
+		SceneManager.LoadScene(id);
+	}
+	public void QuitGame() {
+		Application.Quit();
 	}
 }

@@ -102,9 +102,9 @@ public class EffectsManager : MonoBehaviour
 
     }
 
-    public void SpawnCannonFlash(Vector3 position, Vector3 target)
+	public void SpawnCannonFlash(Vector3 position, Vector3 target, Transform barrel)
     {
-        var parent = cannonMuzzleFlash.transform.parent;
+        var parent = barrel;
 
         var flash = Instantiate(cannonMuzzleFlash);
         flash.SetActive(true);

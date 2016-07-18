@@ -40,6 +40,9 @@ public class EndGameState : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+		GameManager.instance.levelPlaying = false;
+        SceneManager.LoadScene("MainMenu2");
+		//DemoPlayer.instance.Silence(100, 0, 0, 0);
+		MusicManager.instance.StopMusic();
     }
 }

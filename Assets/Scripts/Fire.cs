@@ -77,7 +77,7 @@ public class Fire : MonoBehaviour
 
         //proj.GetComponent<Rigidbody>().AddForce(-transform.up * calculateForce(distance), ForceMode.Impulse);
 
-        EffectsManager.instance.SpawnCannonFlash(transform.position, target);
+		EffectsManager.instance.SpawnCannonFlash(transform.position, target, transform);
         EffectsManager.instance.SpawnTrailEffect(proj.transform);
 
         followShell.RegisterShellCam(shellCam.transform);

@@ -30,7 +30,7 @@ public class AgentAnimations : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rbody = (Rigidbody)transform.parent.GetComponent(typeof(Rigidbody));
-		helmetOffset = transform.position-helmet.position;
+		helmetOffset = helmet.position-transform.position;
 	}
 	
 	// Update is called once per frame
@@ -44,7 +44,6 @@ public class AgentAnimations : MonoBehaviour {
 			shootTimer-=Time.deltaTime;
 			shootTimer = Mathf.Max(0,shootTimer);
 		}
-
 	
 	}
 
@@ -69,7 +68,7 @@ public class AgentAnimations : MonoBehaviour {
 		if (helmet.position.y < newPos.y+helmetOffset.y)
 			helmet.position = newPos+helmetOffset;
 		else
-			helmet.position = Vector3.Lerp(helmet.position, newPos+helmetOffset, Time.deltaTime*5);
+			helmet.position = Vector3.Lerp(helmet.position, newPos+helmetOffset, Time.deltaTime*8);
 
 
 
@@ -95,7 +94,6 @@ public class AgentAnimations : MonoBehaviour {
 		RaycastHit hit;
 
 		if (Physics.Raycast(rifleMuzzle.position, fireDir, out hit, fireDir.magnitude, shootTargetMask, QueryTriggerInteraction.Ignore)) {
-			Debug.Log("hit");
 			if (hit.collider.tag != "Agent") {
 				// FIRE WEAPON //
 				Vector3 fireVector = hit.point-rifleMuzzle.position;
